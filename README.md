@@ -1,4 +1,5 @@
-# contact-manager
+# Contact Manager
+This is a contact mangaar software where you can store user's contact or data of a company. it seems like [zoho contact manager](https://www.zoho.com/contactmanager/)
 
 ## Project setup
 ```
