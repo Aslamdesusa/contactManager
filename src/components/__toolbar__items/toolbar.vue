@@ -17,7 +17,7 @@
         <v-spacer></v-spacer>
 
         <p class="text-caption mt-4">Your trial period expires in 13 days.</p>
-        <v-icon tag="grop" small class="mr-2">mdi-comment-question-outline</v-icon>
+        <v-icon small class="mr-2">mdi-comment-question-outline</v-icon>
         <span class="text-capitalize grey--text">
             <v-btn rounded color="primary" class=" text-capitalize mr-3" dark small outlined>upgrade now</v-btn>
         </span>
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import NavigationBar from '../__navigation__bar/navigationBar'
+import NavigationBar from '../__navigation__bar/navigationBar.vue'
 export default {
     components: {
         NavigationBar

@@ -11,7 +11,7 @@ Vue.use(VueRouter)
     component: Home
   },
   {
-    path: '/company/:company',
+    path: '/companies/:company',
     name: 'Company',
     // route level code-splitting
     // this generates a separate chunk (company.[hash].js) for this route
