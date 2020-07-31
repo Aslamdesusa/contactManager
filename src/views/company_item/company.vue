@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import noRecord from '../components/_/noRecordCompanies.vue'
+import noRecord from '../../components/_/noRecordCompanies'
 // @ is an alias to /src
 export default {
   components:{
