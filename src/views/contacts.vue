@@ -1,18 +1,17 @@
 <template>
   <div class="contacts">
-    <whileEmpty />
+    <noRecord />
   </div>
 </template>
 
 
 
 <script>
-import whileEmpty from '../components/_/whileEmpty.vue'
+import noRecord from '../components/_/noRecordContact.vue'
 // @ is an alias to /src
-
 export default {
   components:{
-    whileEmpty
+    noRecord
   }
 }
 </script>
