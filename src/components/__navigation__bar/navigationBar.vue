@@ -5,8 +5,6 @@
             <v-list-item v-for="(item, i) in items" :key="i">
                 <v-icon v-text="item.icon" class="mr-2" style="color: #bfc4ca;"></v-icon>
                 <v-list-item-title style="color: #bfc4ca;">{{item.text}}</v-list-item-title>
-                <divider />
-                
             </v-list-item>
         </v-list-item-group>
     </v-list>

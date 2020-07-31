@@ -1,5 +1,18 @@
 <template>
   <div class="contacts">
-    <h1>This is a contacts page</h1>
+    <whileEmpty />
   </div>
 </template>
+
+
+
+<script>
+import whileEmpty from '../components/_/whileEmpty.vue'
+// @ is an alias to /src
+
+export default {
+  components:{
+    whileEmpty
+  }
+}
+</script>

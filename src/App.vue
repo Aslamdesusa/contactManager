@@ -1,9 +1,9 @@
 <template>
 <v-app>
-    <Toolbar />
     <v-main>
         <router-view></router-view>
     </v-main>
+    <Toolbar />
 </v-app>
 </template>
 
@@ -19,3 +19,9 @@ export default {
     }),
 };
 </script>
+
+<style>
+.v-application--wrap{
+  min-height: 0vh;
+}
+</style>

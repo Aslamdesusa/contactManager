@@ -1,5 +1,5 @@
 <template>
-<v-app id="inspire">
+<v-app>
     <v-app-bar flat height="40" app :clipped-left="$vuetify.breakpoint.lgAndUp" color="grey lighten-4">
 
         <!-- NavBar icon -->
@@ -14,6 +14,32 @@
         <span class="ml-1 text-sm-body-1 font-weight-medium">ContactManager</span>
         <!-- end -->
 
+        <v-spacer></v-spacer>
+
+        <span class="text-capitalize grey--text">
+            <v-icon small class="mr-3">mdi-timer</v-icon>
+        </span>
+
+        <v-divider vertical></v-divider>
+
+        <span text class="text-capitalize grey--text">
+            <v-icon small class="mr-3 ml-3">mdi-bell-ring-outline</v-icon>
+        </span>
+
+        <v-divider vertical></v-divider>
+
+        <span text class="text-capitalize grey--text mr-3">
+            <v-icon small class="mr-1 ml-3">mdi-wrench</v-icon>Setup
+        </span>
+
+        <v-divider vertical></v-divider>
+
+        <span text class="text-capitalize">
+            <v-avatar class="mr-3 ml-3" color="teal" size="30">
+                <span class="white--text headline">A</span>
+            </v-avatar>
+        </span>
+
     </v-app-bar>
     <!-- end -->
 
@@ -25,9 +51,9 @@
 
 <script>
 import NavigationBar from '../__navigation__bar/navigationBar'
-  export default {
-      components:{
-          NavigationBar
-      }
-  }
+export default {
+    components: {
+        NavigationBar
+    }
+}
 </script>
