@@ -11,7 +11,7 @@ Vue.use(VueRouter)
     component: Home
   },
   {
-    path: '/contacts/:portal/companies/:companies/details',
+    path: '/contacts/:portal/companies',
     name: 'Company',
     // route level code-splitting
     // this generates a separate chunk (company.[hash].js) for this route
@@ -19,7 +19,7 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "company" */ '../views/company_item/company.vue')
   },
   {
-    path: '/contacts/:portal',
+    path: '/contacts/:portal/contacts',
     name: 'Contacts',
     // route level code-splitting
     // this generates a separate chunk (contacts.[hash].js) for this route
