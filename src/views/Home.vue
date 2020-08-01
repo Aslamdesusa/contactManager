@@ -39,7 +39,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .top-header-sticky {
     position: sticky;
     top: 40px;

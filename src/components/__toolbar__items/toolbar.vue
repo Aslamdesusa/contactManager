@@ -19,7 +19,7 @@
         <p class="text-caption mt-4">Your trial period expires in 13 days.</p>
         <v-icon small class="mr-2">mdi-comment-question-outline</v-icon>
         <span class="text-capitalize grey--text">
-            <v-btn rounded color="primary" class=" text-capitalize mr-3" dark small outlined>upgrade now</v-btn>
+            <v-btn rounded color="primary" class="text-capitalize mr-3" dark small outlined>upgrade now</v-btn>
         </span>
 
         <v-divider vertical></v-divider>

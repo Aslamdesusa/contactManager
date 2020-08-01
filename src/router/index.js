@@ -33,6 +33,14 @@ Vue.use(VueRouter)
     // this generates a separate chunk (company_form.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "company form" */ '../views/company_item/company_form.vue')
+  },
+  {
+    path: '/contacts/:portal/companies/details/:id',
+    name: 'Company_Details',
+    // route level code-splitting
+    // this generates a separate chunk (Company_Details.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "Company_Details" */ '../views/company_item/company_details.vue')
   }
 ]
 
