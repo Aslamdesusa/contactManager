@@ -14,7 +14,8 @@
             </v-list-item>
         </v-list>
         <v-divider></v-divider>
-        <v-data-table class="grey lighten-4" disable-pagination hide-default-header hide-default-footer :headers="headers" :items="desserts" :items-per-page="5"></v-data-table>
+        <v-data-table v-model="selected" disable-pagination hide-default-footer :headers="headers" :items="desserts" :single-select="singleSelect" item-key="name" show-select class="grey lighten-4">
+        </v-data-table>
     </v-navigation-drawer>
 </div>
 </template>
@@ -22,11 +23,11 @@
 <script>
 export default {
     data: () => ({
+        singleSelect: false,
         selected: [],
-        allSelected: false,
         dropdown_font: ['All Companies', 'My Companies', 'Recently Updated', 'Recently Viewed', 'Not Updated In 30 Days'],
         headers: [{
-            text: 'Dessert (100g serving)',
+            text: 'Select All',
             align: 'start',
             sortable: false,
             value: 'name',
