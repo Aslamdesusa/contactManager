@@ -81,6 +81,45 @@
                                     </v-card-subtitle>
                                 </v-card>
                             </v-col>
+                            <v-col cols="12" sm="6">
+                                <v-card>
+                                    <v-card-title class="button mb-3">Contact Persons</v-card-title>
+
+                                    <v-card-subtitle>
+                                        <div>
+                                            <v-avatar color="green" size="36">
+                                                <span class="white--text">AD</span>
+                                            </v-avatar>
+                                            <span class="primary--text ml-2">Aslam Desusa</span> <span>Tile</span>
+                                        </div>
+                                        <div class="ml-8 pt-0 d-flex">
+                                            <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                                <v-icon small>mdi-email</v-icon><span class="text-truncate">aslam17@navgurukul.org</span>
+                                            </span>
+                                            <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                                <v-icon small>mdi-phone-classic</v-icon><span>+91 8787676567</span>
+                                            </span>
+                                        </div>
+                                    </v-card-subtitle>
+                                    <v-divider></v-divider>
+                                    <v-card-subtitle>
+                                        <div>
+                                            <v-avatar color="green" size="36">
+                                                <span class="white--text">AD</span>
+                                            </v-avatar>
+                                            <span class="primary--text ml-2">Aslam Desusa</span> <span>Tile</span>
+                                        </div>
+                                        <div class="ml-8 pt-0 d-flex">
+                                            <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                                <v-icon small>mdi-email</v-icon><span class="text-truncate">aslam17@navgurukul.org</span>
+                                            </span>
+                                            <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                                <v-icon small>mdi-phone-classic</v-icon><span>+91 8787676567</span>
+                                            </span>
+                                        </div>
+                                    </v-card-subtitle>
+                                </v-card>
+                            </v-col>
                         </v-row>
                     </v-card>
                 </v-tab-item>
