@@ -1,8 +1,9 @@
 <template>
-    <v-navigation-drawer style="position: relative;" class="" permanent width="390" height="95vh">
+<div class="single_page_details">
+    <v-navigation-drawer style="position: relative;" class="grey lighten-5" permanent width="" height="95vh">
         <v-list class="top-header-sticky" style="top: 0px; background: white;">
             <v-list-item>
-                <v-toolbar  flat height="50" width="200">
+                <v-toolbar flat height="50" width="200">
                     <v-overflow-btn tile class="my-3 mt-8 body-2" :items="dropdown_font" label="Select" target="#dropdown-example"></v-overflow-btn>
 
                     <v-spacer></v-spacer>
@@ -13,8 +14,9 @@
             </v-list-item>
         </v-list>
         <v-divider></v-divider>
-        <v-data-table disable-pagination hide-default-header hide-default-footer :headers="headers" :items="desserts" :items-per-page="5"></v-data-table>
+        <v-data-table class="grey lighten-4" disable-pagination hide-default-header hide-default-footer :headers="headers" :items="desserts" :items-per-page="5"></v-data-table>
     </v-navigation-drawer>
+</div>
 </template>
 
 <script>
