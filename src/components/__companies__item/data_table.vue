@@ -19,7 +19,7 @@
                 <span>export</span>
             </router-link>
 
-            <v-btn rounded to="/contacts/basehippo/companies/add" class="primary ml-2 mr-2" small>Add Company</v-btn>
+            <v-btn rounded to="/contacts/bashhippo/companies/add" class="primary ml-2 mr-2" small>Add Company</v-btn>
 
             <v-btn icon>
                 <v-icon>mdi-dots-vertical</v-icon>
@@ -27,9 +27,9 @@
         </v-toolbar>
     </v-card>
     <v-data-table v-model="selected" item-key="name" show-select :headers="headers" :items="desserts" class="elevation-1">
-        <template v-slot:item.name="{ item }">
-            <router-link v-if="item.name" class="mr-1" to="/contacts/bashhippo/companies/details/id" style="text-decoration: none !important;">
-                <span>{{item.name}}</span>
+        <template v-slot:item.companyName="{ item }">
+            <router-link v-if="item.companyName" class="mr-1" to="/contacts/bashhippo/companies/details/id" style="text-decoration: none !important;">
+                <span>{{item.companyName}}</span>
             </router-link>
             <span v-else>
                 --
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import http_companies from '../../api-handler/http_company'
 export default {
     data() {
         return {
@@ -49,7 +50,7 @@ export default {
                     text: 'Company Name',
                     align: 'start',
                     sortable: false,
-                    value: 'name',
+                    value: 'companyName',
                 },
                 {
                     text: 'Website',
@@ -61,23 +62,27 @@ export default {
                 },
                 {
                     text: 'Billing Country',
-                    value: 'billingCountry'
+                    value: 'address.billingAddress.billingCountry'
                 },
             ],
-            desserts: [{
-                    name: 'Basehippo',
-                    website: 'https://test.com',
-                    phone: +916767678987,
-                    billingCountry: 'India',
-                },
-                {
-                    name: 'codex',
-                    website: 'https://test1.com',
-                    phone: +918676556543,
-                    billingCountry: 'India',
-                },
-            ],
+            desserts: [],
         }
     },
+    created(){
+        this.getData()
+    },
+    methods:{
+        async getData(){
+            try {
+                await http_companies.getPost().then(res=>{
+                    this.desserts = res.data.documents 
+                })
+            } catch (error) {
+                if (error) {
+                    console.log(error.response)
+                }
+            }
+        }
+    }
 }
 </script>

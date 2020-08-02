@@ -1,21 +1,51 @@
 <template>
 <div class="single_page_details">
-    <v-navigation-drawer style="position: relative;" class="grey lighten-5" permanent width="" height="95vh">
-        <v-list class="top-header-sticky" style="top: 0px; background: white;">
+    <v-navigation-drawer style="position: relative;" permanent height="95vh" width>
+        <v-list class="top-header-sticky grey lighten-5" style="top: 0px;">
             <v-list-item>
-                <v-toolbar flat height="50" width="200">
-                    <v-overflow-btn tile class="my-3 mt-8 body-2" :items="dropdown_font" label="Select" target="#dropdown-example"></v-overflow-btn>
+                <v-list-item-content>
+                    <v-menu offset-y>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-list-item-title class="subtitle-1 d-flex">
+                                <v-checkbox dense></v-checkbox>
+                                <span class=" mt-6 d-inline-block text-truncate" style="max-width: 140px;">All Companies</span>
+                                <v-icon class="mt-2" v-bind="attrs" v-on="on">mdi-arrow-down-drop-circle</v-icon>
+                            </v-list-item-title>
+                        </template>
+                        <v-list dense>
+                            <v-list-item-group v-model="item" color="primary">
+                                <v-list-item v-for="(item, i) in items" :key="i">
+                                    <v-list-item-content>
+                                        <v-list-item-title v-text="item.title"></v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                            </v-list-item-group>
+                        </v-list>
+                    </v-menu>
 
-                    <v-spacer></v-spacer>
+                </v-list-item-content>
 
-                    <v-icon>mdi-note-plus</v-icon>
-                    <v-icon>mdi-dots-vertical</v-icon>
-                </v-toolbar>
+                <v-list-item-action>
+                    <div>
+                        <v-btn fab small text color="white" width="30" height="30" class="light-blue mr-2">
+                            <v-icon>mdi-plus</v-icon>
+                        </v-btn>
+                        <v-btn fab small outlined color="grey" width="30" height="30" class="">
+                            <v-icon>mdi-menu</v-icon>
+                        </v-btn>
+                    </div>
+                </v-list-item-action>
             </v-list-item>
         </v-list>
         <v-divider></v-divider>
-        <v-data-table v-model="selected" disable-pagination hide-default-footer :headers="headers" :items="desserts" :single-select="singleSelect" item-key="name" show-select class="grey lighten-4">
-        </v-data-table>
+        <v-list dense>
+            <v-list-item-group v-model="item">
+                <v-list-item link v-for="(item, i) in data" :key="i">
+                    <v-checkbox dense></v-checkbox>
+                    <v-list-item-title class="grey lighten-5 pa-5">{{item.title}}</v-list-item-title>
+                </v-list-item>
+            </v-list-item-group>
+        </v-list>
     </v-navigation-drawer>
 </div>
 </template>
@@ -23,22 +53,42 @@
 <script>
 export default {
     data: () => ({
-        singleSelect: false,
-        selected: [],
-        dropdown_font: ['All Companies', 'My Companies', 'Recently Updated', 'Recently Viewed', 'Not Updated In 30 Days'],
-        headers: [{
-            text: 'Select All',
-            align: 'start',
-            sortable: false,
-            value: 'name',
-        }, ],
-        desserts: [{
-                name: 'Frozen Yogurt',
+        item: null,
+        items: [{
+                title: 'All Companies'
             },
             {
-                name: 'Ice cream sandwich',
+                title: 'My Companies'
+            },
+            {
+                title: 'Recently Updated'
+            },
+            {
+                title: 'Recently Viewed'
+            },
+            {
+                title: 'Not Updated In 30 Days'
             },
         ],
+        data: [
+            {
+                title: 'Aslam Desusa'
+            },
+            {
+                title: 'Basehippo'
+            },
+            {
+                title: 'Codex GPO'
+            },
+            {
+                title: 'Trackier Company'
+            },
+            {
+                title: 'Microsoft Age'
+            },
+        ],
+        singleSelect: false,
+        selected: [],
     }),
 }
 </script>

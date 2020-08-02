@@ -23,7 +23,7 @@ export default {
                 },
                 {
                     text: 'Companies',
-                    icon: 'mdi-home-outline',
+                    icon: 'mdi-domain',
                     path: '/contacts/bashhippo/companies'
                 },
                 {

@@ -14,15 +14,15 @@
         <v-col cols="12" sm="12">
             <v-row>
                 <v-col cols="12" sm="4">
-                    <v-text-field label="Name"></v-text-field>
-                    <v-text-field label="Website"></v-text-field>
-                    <v-text-field label="Description"></v-text-field>
-                    <v-text-field label="Phone"></v-text-field>
-                    <v-text-field label="Fax"></v-text-field>
+                    <v-text-field label="Name" v-model="formData.companyName"></v-text-field>
+                    <v-text-field label="Website" v-model="formData.website"></v-text-field>
+                    <v-text-field label="Description" v-model="formData.description"></v-text-field>
+                    <v-text-field label="Phone" v-model="formData.phone"></v-text-field>
+                    <v-text-field label="Fax" v-model="formData.fax"></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="4">
                     <v-file-input :rules="rules" accept="image/png, image/jpeg, image/bmp" placeholder="Pick an avatar" prepend-icon="mdi-camera" label="Avatar"></v-file-input>
-                    <v-text-field label="Tags"></v-text-field>
+                    <v-text-field label="Tags" v-model="formData.tags"></v-text-field>
                 </v-col>
             </v-row>
         </v-col>
@@ -43,19 +43,19 @@
                         <v-row>
                             <v-col cols="12" sm="4">
                                 <h2 class="mt-4 text--disabled">Billing Address</h2>
-                                <v-text-field label="Billing Street"></v-text-field>
-                                <v-text-field label="Billing City"></v-text-field>
-                                <v-text-field label="Billing State"></v-text-field>
-                                <v-text-field label="Billing Country"></v-text-field>
-                                <v-text-field label="Billing Zip Code"></v-text-field>
+                                <v-text-field label="Billing Street" v-model="formData.address.billingAddress.billingStreet"></v-text-field>
+                                <v-text-field label="Billing City" v-model="formData.address.billingAddress.billingCity"></v-text-field>
+                                <v-text-field label="Billing State" v-model="formData.address.billingAddress.billingState"></v-text-field>
+                                <v-text-field label="Billing Country" v-model="formData.address.billingAddress.billingCountry"></v-text-field>
+                                <v-text-field label="Billing Zip Code" v-model="formData.address.billingAddress.billingZipCode"></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="4">
                                 <h2 class="mt-4 text--disabled">Shipping Address</h2>
-                                <v-text-field label="Shipping Street"></v-text-field>
-                                <v-text-field label="Shipping City"></v-text-field>
-                                <v-text-field label="Shipping State"></v-text-field>
-                                <v-text-field label="Shipping Country"></v-text-field>
-                                <v-text-field label="Shipping Zip Code"></v-text-field>
+                                <v-text-field label="Shipping Street" v-model="formData.address.shippingAddress.shippingStreet"></v-text-field>
+                                <v-text-field label="Shipping City" v-model="formData.address.shippingAddress.shippingCity"></v-text-field>
+                                <v-text-field label="Shipping State" v-model="formData.address.shippingAddress.shippingState"></v-text-field>
+                                <v-text-field label="Shipping Country" v-model="formData.address.shippingAddress.shippingCountry"></v-text-field>
+                                <v-text-field label="Shipping Zip Code" v-model="formData.address.shippingAddress.shippingZipCode"></v-text-field>
                             </v-col>
                         </v-row>
                     </v-card>
@@ -70,16 +70,44 @@
     </v-row>
     <v-divider></v-divider>
     <div class="action_buttons mb-16 mt-5">
-        <v-btn rounded color="primary" class="ma-2" dark>Save</v-btn>
+        <v-btn rounded color="primary" class="ma-2" dark @click="save">Save</v-btn>
         <v-btn rounded class="ma-2">Cancle</v-btn>
     </div>
 </div>
 </template>
 
 <script>
+import http_company from '../../api-handler/http_company'
 export default {
     data() {
         return {
+            formData: {
+                userId: 'idNotAvailable',
+                companyName: '',
+                website: '',
+                description: '',
+                phone: '',
+                fax: '',
+                tags: '',
+                address: {
+                    billingAddress: {
+                        billingStreet: '',
+                        billingCity: '',
+                        billingState: '',
+                        billingCountry: '',
+                        billingZipCode: ''
+                    },
+                    // Shipping Address
+                    shippingAddress: {
+                        shippingStreet: '',
+                        shippingCity: '',
+                        shippingState: '',
+                        shippingCountry: '',
+                        shippingZipCode: ''
+                    }
+                },
+                avatarUrl: 'hello',
+            },
             tab: null,
             items: [{
                     tab: 'Address',
@@ -93,6 +121,20 @@ export default {
             rules: [
                 value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
             ],
+        }
+    },
+    methods: {
+        async save() {
+            try {
+                await http_company.insertPost(this.formData).then(res=>{
+                    console.log(res)
+                })
+            } catch (error) {
+                let grabError = error.response
+                if (error) {
+                    alert(grabError.data.message)
+                }
+            }
         }
     }
 }
