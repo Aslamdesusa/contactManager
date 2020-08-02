@@ -40,9 +40,9 @@
         <v-divider></v-divider>
         <v-list dense>
             <v-list-item-group v-model="item">
-                <v-list-item link v-for="(item, i) in data" :key="i">
+                <v-list-item v-for="(item, i) in posts" :key="i" :to="item._id">
                     <v-checkbox dense></v-checkbox>
-                    <v-list-item-title class="grey lighten-5 pa-5">{{item.title}}</v-list-item-title>
+                    <v-list-item-title class="pa-5">{{item.companyName}}</v-list-item-title>
                 </v-list-item>
             </v-list-item-group>
         </v-list>
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
     data: () => ({
         item: null,
@@ -70,26 +71,17 @@ export default {
                 title: 'Not Updated In 30 Days'
             },
         ],
-        data: [
-            {
-                title: 'Aslam Desusa'
-            },
-            {
-                title: 'Basehippo'
-            },
-            {
-                title: 'Codex GPO'
-            },
-            {
-                title: 'Trackier Company'
-            },
-            {
-                title: 'Microsoft Age'
-            },
-        ],
         singleSelect: false,
         selected: [],
     }),
+    mounted() {
+        this.$store.dispatch('loadPosts')
+    },
+    computed: {
+        ...mapState([
+            'posts'
+        ])
+    }
 }
 </script>
 

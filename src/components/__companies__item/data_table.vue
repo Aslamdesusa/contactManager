@@ -26,9 +26,9 @@
             </v-btn>
         </v-toolbar>
     </v-card>
-    <v-data-table v-model="selected" item-key="name" show-select :headers="headers" :items="desserts" class="elevation-1">
+    <v-data-table v-model="selected" item-key="name" show-select :headers="headers" :items="posts" class="elevation-1">
         <template v-slot:item.companyName="{ item }">
-            <router-link v-if="item.companyName" class="mr-1" to="/contacts/bashhippo/companies/details/id" style="text-decoration: none !important;">
+            <router-link v-if="item.companyName" class="mr-1" style="text-decoration: none !important;" :to="{ name: 'CompanyDetails', params: { id: item._id }}">
                 <span>{{item.companyName}}</span>
             </router-link>
             <span v-else>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import http_companies from '../../api-handler/http_company'
+import {mapState} from 'vuex'
 export default {
     data() {
         return {
@@ -65,24 +65,15 @@ export default {
                     value: 'address.billingAddress.billingCountry'
                 },
             ],
-            desserts: [],
         }
     },
-    created(){
-        this.getData()
+    mounted() {
+        this.$store.dispatch('loadPosts')
     },
-    methods:{
-        async getData(){
-            try {
-                await http_companies.getPost().then(res=>{
-                    this.desserts = res.data.documents 
-                })
-            } catch (error) {
-                if (error) {
-                    console.log(error.response)
-                }
-            }
-        }
+    computed: {
+        ...mapState([
+            'posts'
+        ])
     }
 }
 </script>
