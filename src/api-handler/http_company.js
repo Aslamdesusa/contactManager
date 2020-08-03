@@ -1,19 +1,23 @@
 import axios from 'axios'
 
 const companyUrl = '/company/api/contact-manager/v1/create/company'
-const companyUrlGet = '/company/api/contact-manager/v1/get/companies'
 const companyEditUrl = '/company/api/contact-manager/v1/edit/company/by/id'
+const updateTags = '/company/api/contact-manager/v1/delete/tags'
 
-class categories {
-    static getPost(){
-        return axios.get(`${companyUrlGet}`)
-        .then(res=>{
-            return (res)
-        }).catch(err=>{
+class companies {
+    static updateTags(data, _id){
+        return axios.put(`${updateTags}?_id=${_id}`, {
+          //   User Details
+            tags: data.tags,
+        })
+        .then(function(res){
+            return res
+        }).catch((err) =>{
+            // console.log(err.response)
             throw(err)
+            // return err.response
         })
     }
-
     // create new company
     static insertPost(data){
         return axios.post(`${companyUrl}`, {
@@ -93,4 +97,4 @@ class categories {
     }
 }
 
-export default categories;
+export default companies;

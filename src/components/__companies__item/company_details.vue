@@ -49,7 +49,7 @@
 
         <div class="text-sm-body-2 ml-16">
             <span v-if="this.$store.state.selectSingPost.tags.length">
-                <v-chip small class="ma-2" close color="" text-color="black" @click:close="close" v-for="(item, i) in this.$store.state.selectSingPost.tags" :key="i">
+                <v-chip small class="ma-2" close color="" text-color="black" v-for="(item, i) in this.$store.state.selectSingPost.tags" :key="i" @click:close="close(item, i)">
                     {{item}}
                 </v-chip>
             </span>
@@ -169,6 +169,7 @@
 </template>
 
 <script>
+import http_companies from '../../api-handler/http_company'
 export default {
     data() {
         return {
@@ -198,9 +199,17 @@ export default {
         editPost() {
             console.log(this.$store.state.selectSingPost)
         },
-        close() {
-            alert('Chip close clicked')
-            console.log(this.$store)
+        async close(eventTag, index) {
+            try {
+                await http_companies.updateTags({tags: [eventTag]}, this.$route.params.id).then(res => {
+                    if (res) {
+                        this.$store.state.selectSingPost.tags.splice(index, 1)   
+                        console.log(res)
+                    }
+                })
+            } catch (error) {
+                console.log(error)
+            }
         },
     }
 }
