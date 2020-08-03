@@ -15,7 +15,7 @@
                 <v-col cols="12" sm="4">
                     <v-text-field label="Name" v-model="formData.companyName"></v-text-field>
                     <v-text-field label="Website" v-model="formData.website"></v-text-field>
-                    <v-text-field label="Description" v-model="formData.description"></v-text-field>
+                    <v-textarea v-model="formData.description" auto-grow filled label="Description" rows="1"></v-textarea>
                     <v-text-field label="Phone" v-model="formData.phone"></v-text-field>
                     <v-text-field label="Fax" v-model="formData.fax"></v-text-field>
                 </v-col>
