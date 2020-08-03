@@ -3,8 +3,18 @@ import axios from 'axios'
 const companyUrl = '/company/api/contact-manager/v1/create/company'
 const companyEditUrl = '/company/api/contact-manager/v1/edit/company/by/id'
 const updateTags = '/company/api/contact-manager/v1/delete/tags'
+const deleteUrl = '/company/api/contact-manager/v1/delete/company'
 
 class companies {
+    static deleteCompanyData(_id){
+        return axios.delete(`${deleteUrl}?_id=${_id}`)
+        .then(function(res){
+            return res
+        }).catch((err) =>{
+            throw(err)
+        })
+    }
+
     static updateTags(data, _id){
         return axios.put(`${updateTags}?_id=${_id}`, {
           //   User Details

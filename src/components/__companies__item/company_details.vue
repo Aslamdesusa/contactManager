@@ -6,15 +6,12 @@
             <v-avatar color="orange" size="50">
                 <span class="white--text headline">62</span>
             </v-avatar>
-
             <div class="mt-5">
                 <v-toolbar-title class="ml-2 text-capitalize font-weight-light">{{this.$store.state.selectSingPost.companyName}}</v-toolbar-title>
                 <span class="ma-4 grey--text caption">{{this.$store.state.selectSingPost.description}}</span>
             </div>
             <v-icon class="ml-2" small>mdi-twitter</v-icon>
-
             <v-spacer></v-spacer>
-
             <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small :to="{name: 'EditCompanyDetails', params: {id: this.$store.state.selectSingPost._id}}">Edit</v-btn>
             <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small>New Record</v-btn>
 
@@ -26,13 +23,42 @@
                 </template>
 
                 <v-list dense>
-                    <v-list-item v-for="(item, index) in items" :key="index">
-                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    <v-list-item>
+                        <v-list-item-title>History</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item>
+                        <v-dialog v-model="dialog" width="500">
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-list-item-title v-bind="attrs" v-on="on">Delete</v-list-item-title>
+                            </template>
+
+                            <v-card>
+                                <v-card-title class="headline grey lighten-2">
+                                    Are you sure?
+                                </v-card-title>
+
+                                <v-card-text class="mt-4 subtitle-1">
+                                    Do you want to delete this company and its associated contacts?
+                                </v-card-text>
+
+                                <v-divider></v-divider>
+
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="red" text @click="deleteCompany">
+                                        Okay, Go ahead
+                                    </v-btn>
+                                    <v-btn color="grey" text @click="dialog = false">
+                                        Cancle
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
                     </v-list-item>
                 </v-list>
             </v-menu>
 
-            <v-icon class="ml-1 mr-1">mdi-window-close</v-icon>
+            <v-icon class="ml-1 mr-1" @click="closePage">mdi-window-close</v-icon>
         </v-toolbar>
 
         <div class="text-sm-body-2 ml-16">
@@ -173,6 +199,7 @@ import http_companies from '../../api-handler/http_company'
 export default {
     data() {
         return {
+            dialog: false,
             toggleAddress: true,
             tab: null,
             colors: [
@@ -193,6 +220,20 @@ export default {
         }
     },
     methods: {
+        closePage(){
+            this.$router.push({ name: 'Company', params: { portal: 'bashhippo' } })
+        },
+        async deleteCompany() {
+            try {
+                await http_companies.deleteCompanyData(this.$route.params.id).then(res=>{
+                    if (res) {
+                        this.$router.push({ name: 'Company', params: { portal: 'bashhippo' } })
+                    }
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        },
         toggleAdd() {
             this.toggleAddress ? this.toggleAddress = false : this.toggleAddress = true
         },
@@ -201,9 +242,11 @@ export default {
         },
         async close(eventTag, index) {
             try {
-                await http_companies.updateTags({tags: [eventTag]}, this.$route.params.id).then(res => {
+                await http_companies.updateTags({
+                    tags: [eventTag]
+                }, this.$route.params.id).then(res => {
                     if (res) {
-                        this.$store.state.selectSingPost.tags.splice(index, 1)   
+                        this.$store.state.selectSingPost.tags.splice(index, 1)
                         console.log(res)
                     }
                 })
