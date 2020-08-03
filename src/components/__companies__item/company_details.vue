@@ -2,7 +2,6 @@
 <div>
     <v-container v-if="this.$store.state.selectSingPost">
         <v-toolbar flat height="80">
-            
 
             <v-avatar color="orange" size="50">
                 <span class="white--text headline">62</span>
@@ -18,7 +17,21 @@
 
             <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small :to="{name: 'EditCompanyDetails', params: {id: this.$store.state.selectSingPost._id}}">Edit</v-btn>
             <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small>New Record</v-btn>
-            <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small>More</v-btn>
+
+            <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn small rounded outlined class="text-capitalize" color="grey" dark v-bind="attrs" v-on="on">
+                        More
+                    </v-btn>
+                </template>
+
+                <v-list>
+                    <v-list-item v-for="(item, index) in items" :key="index">
+                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
+
             <v-icon class="ml-1 mr-1">mdi-window-close</v-icon>
         </v-toolbar>
 
@@ -139,10 +152,17 @@ export default {
     data() {
         return {
             tab: null,
+            items: [{
+                    title: 'History'
+                },
+                {
+                    title: 'Delete'
+                }
+            ],
         }
     },
     methods: {
-        editPost(){
+        editPost() {
             console.log(this.$store.state.selectSingPost)
         },
         close() {
