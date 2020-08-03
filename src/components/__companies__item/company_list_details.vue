@@ -1,6 +1,6 @@
 <template>
 <div class="single_page_details">
-    <v-navigation-drawer style="position: relative;" permanent height="95vh" width>
+    <v-navigation-drawer style="position: relative; margin-top: -12px;" permanent height="95vh" width>
         <v-list class="top-header-sticky grey lighten-5" style="top: 0px;">
             <v-list-item>
                 <v-list-item-content>

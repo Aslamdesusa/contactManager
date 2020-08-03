@@ -1,6 +1,6 @@
 <template>
 <div>
-    <v-container v-if="this.$store.state.selectSingPost">
+    <v-container v-if="this.$store.state.selectSingPost" class="ma-0 pa-0">
         <v-toolbar flat height="80">
 
             <v-avatar color="orange" size="50">
