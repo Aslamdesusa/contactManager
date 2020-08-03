@@ -147,14 +147,29 @@ export default {
     },
     methods: {
         async save() {
-            try {
-                await http_company.insertPost(this.formData).then(res => {
-                    console.log(res)
-                })
-            } catch (error) {
-                let grabError = error.response
-                if (error) {
-                    alert(grabError.data.message)
+            if (this.$route.params.id) {
+                try {
+                    await http_company.updatePost(this.formData, this.$route.params.id).then(res => {
+                        if (res) {
+                            this.$router.push(`/contacts/bashhippo/companies/details/${this.$route.params.id}`)
+                        }
+                    })
+                } catch (error) {
+                    let grabError = error.response
+                    if (error) {
+                        alert(grabError.data.message)
+                    }
+                }
+            } else {
+                try {
+                    await http_company.insertPost(this.formData).then(res => {
+                        console.log(res)
+                    })
+                } catch (error) {
+                    let grabError = error.response
+                    if (error) {
+                        alert(grabError.data.message)
+                    }
                 }
             }
         }
