@@ -8,7 +8,6 @@
                     <v-icon>mdi-lightbulb-on</v-icon><a href="#">help?</a>
                 </span>
             </div>
-
             <v-divider></v-divider>
         </v-col>
         <v-col cols="12" sm="12">
@@ -78,6 +77,9 @@
 
 <script>
 import http_company from '../../api-handler/http_company'
+import {
+    mapState
+} from 'vuex'
 export default {
     data() {
         return {
@@ -123,10 +125,30 @@ export default {
             ],
         }
     },
+    mounted() {
+        this.$store.dispatch('getPostById')
+    },
+    computed: {
+        ...mapState([
+            'selectSingPost'
+        ])
+    },
+    created() {
+        if (this.$route.params.id) {
+            this.$store.state.companyId = this.$route.params.id
+        }
+    },
+    watch: {
+        selectSingPost: function (val) {
+            if (val) {
+                this.formData = val
+            }
+        }
+    },
     methods: {
         async save() {
             try {
-                await http_company.insertPost(this.formData).then(res=>{
+                await http_company.insertPost(this.formData).then(res => {
                     console.log(res)
                 })
             } catch (error) {

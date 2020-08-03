@@ -41,6 +41,14 @@ Vue.use(VueRouter)
     // this generates a separate chunk (Company_Details.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "Company_Details" */ '../views/company_item/company_details.vue')
+  },
+  {
+    path: '/contacts/:portal/companies/edit/:id',
+    name: 'EditCompanyDetails',
+    // route level code-splitting
+    // this generates a separate chunk (Company_Details.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "Company_Details" */ '../views/company_item/company_form.vue')
   }
 ]
 

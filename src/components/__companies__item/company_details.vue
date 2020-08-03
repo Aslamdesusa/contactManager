@@ -16,7 +16,7 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small @click="editPost">Edit</v-btn>
+            <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small :to="{name: 'EditCompanyDetails', params: {id: this.$store.state.selectSingPost._id}}">Edit</v-btn>
             <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small>New Record</v-btn>
             <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small>More</v-btn>
             <v-icon class="ml-1 mr-1">mdi-window-close</v-icon>
