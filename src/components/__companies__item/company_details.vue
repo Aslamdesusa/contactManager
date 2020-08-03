@@ -78,9 +78,28 @@
                         <v-row>
                             <v-col cols="12" sm="6">
                                 <v-card v-if="this.$store.state.selectSingPost.address.billingAddress">
-                                    <v-card-title class="button">Billing Address</v-card-title>
+                                    <div v-if="toggleAddress">
+                                        <div class="d-flex">
+                                            <v-card-title class="button">Billing Address</v-card-title>
+                                            <v-spacer></v-spacer>
+                                            <v-btn @click="toggleAdd" class="ma-2" text icon color="red lighten-2">
+                                                <v-icon>mdi-arrow-right-drop-circle-outline</v-icon>
+                                            </v-btn>
+                                        </div>
 
-                                    <v-card-subtitle class="mt-4">{{this.$store.state.selectSingPost.address.billingAddress.billingStreet}}, {{ this.$store.state.selectSingPost.address.billingAddress.billingCity}} <br> {{ this.$store.state.selectSingPost.address.billingAddress.billingState}}, {{ this.$store.state.selectSingPost.address.billingAddress.billingZipCode}} {{ this.$store.state.selectSingPost.address.billingAddress.billingCountry}}</v-card-subtitle>
+                                        <v-card-subtitle>{{this.$store.state.selectSingPost.address.billingAddress.billingStreet}}, {{ this.$store.state.selectSingPost.address.billingAddress.billingCity}} <br> {{ this.$store.state.selectSingPost.address.billingAddress.billingState}}, {{ this.$store.state.selectSingPost.address.billingAddress.billingZipCode}} {{ this.$store.state.selectSingPost.address.billingAddress.billingCountry}}</v-card-subtitle>
+                                    </div>
+                                    <div v-else>
+                                        <div class="d-flex">
+                                            <v-card-title class="button">Shipping Address</v-card-title>
+                                            <v-spacer></v-spacer>
+                                            <v-btn @click="toggleAdd" class="ma-2" text icon color="red lighten-2">
+                                                <v-icon>mdi-arrow-left-drop-circle-outline</v-icon>
+                                            </v-btn>
+                                        </div>
+
+                                        <v-card-subtitle>{{this.$store.state.selectSingPost.address.shippingAddress.shippingStreet}}, {{ this.$store.state.selectSingPost.address.shippingAddress.shippingCity}} <br> {{ this.$store.state.selectSingPost.address.shippingAddress.shippingState}}, {{ this.$store.state.selectSingPost.address.shippingAddress.shippingZipCode}} {{ this.$store.state.selectSingPost.address.shippingAddress.shippingCountry}}</v-card-subtitle>
+                                    </div>
                                 </v-card>
                             </v-col>
                             <v-col cols="12" sm="6">
@@ -151,7 +170,16 @@
 export default {
     data() {
         return {
+            toggleAddress: true,
             tab: null,
+            colors: [
+                'indigo',
+                'warning',
+            ],
+            slides: [
+                'First',
+                'Second',
+            ],
             items: [{
                     title: 'History'
                 },
@@ -162,6 +190,9 @@ export default {
         }
     },
     methods: {
+        toggleAdd() {
+            this.toggleAddress ? this.toggleAddress = false : this.toggleAddress = true
+        },
         editPost() {
             console.log(this.$store.state.selectSingPost)
         },
