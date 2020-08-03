@@ -25,7 +25,7 @@
                     </v-btn>
                 </template>
 
-                <v-list>
+                <v-list dense>
                     <v-list-item v-for="(item, index) in items" :key="index">
                         <v-list-item-title>{{ item.title }}</v-list-item-title>
                     </v-list-item>
