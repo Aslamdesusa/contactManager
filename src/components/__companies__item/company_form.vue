@@ -21,7 +21,7 @@
                 </v-col>
                 <v-col cols="12" sm="4">
                     <v-file-input :rules="rules" accept="image/png, image/jpeg, image/bmp" placeholder="Pick an avatar" prepend-icon="mdi-camera" label="Avatar"></v-file-input>
-                    <v-text-field label="Tags" v-model="formData.tags"></v-text-field>
+                    <v-combobox v-model="formData.tags" placeholder="Separate tags with Enter" label="Tags" multiple chips></v-combobox>
                 </v-col>
             </v-row>
         </v-col>
@@ -83,6 +83,7 @@ import {
 export default {
     data() {
         return {
+            select: [],
             formData: {
                 userId: 'idNotAvailable',
                 companyName: '',
@@ -90,7 +91,7 @@ export default {
                 description: '',
                 phone: '',
                 fax: '',
-                tags: '',
+                tags: [],
                 address: {
                     billingAddress: {
                         billingStreet: '',

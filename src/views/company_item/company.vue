@@ -1,7 +1,7 @@
 <template>
   <div class="contacts">
     <noRecord v-if="noRecord"/>
-    <companyDataTable />
+    <companyDataTable/>
   </div>
 </template>
 

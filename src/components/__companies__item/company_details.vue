@@ -36,21 +36,23 @@
         </v-toolbar>
 
         <div class="text-sm-body-2 ml-16">
-            <span class="ml-3">
+            <span class="ml-3" v-if="this.$store.state.selectSingPost.website">
                 <v-icon class="mr-2" small>mdi-earth</v-icon><a :href="this.$store.state.selectSingPost.website">{{this.$store.state.selectSingPost.website}}</a>
             </span>
-            <span>
+            <span v-if="this.$store.state.selectSingPost.phone">
                 <v-icon class="ml-2 mr-2" small>mdi-phone-classic</v-icon>{{this.$store.state.selectSingPost.phone}}
             </span>
-            <span>
+            <span v-if="this.$store.state.selectSingPost.fax">
                 <v-icon class="ml-2 mr-2">mdi-fax</v-icon> {{this.$store.state.selectSingPost.fax}}
             </span>
         </div>
 
         <div class="text-sm-body-2 ml-16">
-            <v-chip small class="ma-2" close color="" text-color="black" @click:close="close">
-                {{this.$store.state.selectSingPost.tags}}
-            </v-chip>
+            <span v-if="this.$store.state.selectSingPost.tags.length">
+                <v-chip small class="ma-2" close color="" text-color="black" @click:close="close" v-for="(item, i) in this.$store.state.selectSingPost.tags" :key="i">
+                    {{item}}
+                </v-chip>
+            </span>
             <span>
                 <a href="#" style="text-decoration: none;">+ Add Tags</a>
             </span>
