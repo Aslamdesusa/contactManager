@@ -27,7 +27,7 @@
 
                 <v-list-item-action>
                     <div>
-                        <v-btn fab small text color="white" width="30" height="30" class="light-blue mr-2">
+                        <v-btn to="/contacts/bashhippo/companies/add" fab small text color="white" width="30" height="30" class="light-blue mr-2">
                             <v-icon>mdi-plus</v-icon>
                         </v-btn>
                         <v-btn fab small outlined color="grey" width="30" height="30" class="">

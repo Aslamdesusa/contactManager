@@ -16,7 +16,7 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small>Edit</v-btn>
+            <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small @click="editPost">Edit</v-btn>
             <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small>New Record</v-btn>
             <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small>More</v-btn>
             <v-icon class="ml-1 mr-1">mdi-window-close</v-icon>
@@ -142,6 +142,9 @@ export default {
         }
     },
     methods: {
+        editPost(){
+            console.log(this.$store.state.selectSingPost)
+        },
         close() {
             alert('Chip close clicked')
             console.log(this.$store)
