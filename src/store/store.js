@@ -9,6 +9,8 @@ export const store = new Vuex.Store({
         posts: [],
         selectSingPost: null,
         companyId: null,
+        disabled: false,
+        loading: false,
     },
     actions: {
         async loadPosts(){
@@ -40,6 +42,6 @@ export const store = new Vuex.Store({
         },
         SET_GET (state, singleDoc) {
             state.selectSingPost = singleDoc
-        }
+        },
     }
 })

@@ -9,7 +9,9 @@
                             <v-list-item-title class="subtitle-1 d-flex">
                                 <v-checkbox dense></v-checkbox>
                                 <span class=" mt-6 d-inline-block text-truncate" style="max-width: 140px;">All Companies</span>
-                                <v-icon class="mt-2" v-bind="attrs" v-on="on">mdi-arrow-down-drop-circle</v-icon>
+                                <v-btn v-bind="attrs" v-on="on" class="mt-4" text icon color="grey">
+                                    <v-icon>mdi-arrow-down-drop-circle-outline</v-icon>
+                                </v-btn>
                             </v-list-item-title>
                         </template>
                         <v-list dense>
@@ -51,7 +53,9 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {
+    mapState
+} from 'vuex'
 export default {
     data: () => ({
         item: null,
@@ -84,11 +88,11 @@ export default {
             'selectSingPost'
         ])
     },
-    created(){
+    created() {
         this.$store.state.companyId = this.$route.params.id
     },
-    methods:{
-        passingData(data){
+    methods: {
+        passingData(data) {
             this.$store.state.selectSingPost = data
         }
     }

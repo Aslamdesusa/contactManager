@@ -4,6 +4,7 @@
         <router-view></router-view>
     </v-main>
     <Toolbar />
+    <notifications height="200" group="foo" position="top center"/>
 </v-app>
 </template>
 
@@ -12,16 +13,15 @@ import Toolbar from './components/__toolbar__items/toolbar'
 export default {
     name: 'App',
     components: {
-      Toolbar,
+        Toolbar,
     },
     data: () => ({
-        //
     }),
 };
 </script>
 
 <style>
-.v-application--wrap{
-  min-height: 0vh;
+.v-application--wrap {
+    min-height: 0vh;
 }
 </style>

@@ -62,6 +62,11 @@ import NavigationBar from '../__navigation__bar/navigationBar.vue'
 export default {
     components: {
         NavigationBar
+    },
+    data() {
+        return {
+           //
+        }
     }
 }
 </script>

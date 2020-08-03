@@ -69,8 +69,8 @@
     </v-row>
     <v-divider></v-divider>
     <div class="action_buttons mb-16 mt-5">
-        <v-btn rounded color="primary" class="ma-2" dark @click="save">Save</v-btn>
-        <v-btn rounded class="ma-2">Cancle</v-btn>
+        <v-btn rounded color="primary" class="ma-2" dark @click="save" :loading="this.$store.state.loading">Save</v-btn>
+        <v-btn rounded class="ma-2" :disabled="this.$store.state.disabled">Cancle</v-btn>
     </div>
 </div>
 </template>
@@ -148,28 +148,63 @@ export default {
     },
     methods: {
         async save() {
+            this.$store.state.disabled = true
+            this.$store.state.loading = true
             if (this.$route.params.id) {
                 try {
                     await http_company.updatePost(this.formData, this.$route.params.id).then(res => {
                         if (res) {
                             this.$router.push(`/contacts/bashhippo/companies/details/${this.$route.params.id}`)
+                            this.$notify({
+                                group: 'foo',
+                                type: 'success',
+                                title: 'success',
+                                text: 'Company updated successfully'
+                            });
+                            this.$store.state.disabled = false
+                            this.$store.state.loading = false
                         }
                     })
                 } catch (error) {
                     let grabError = error.response
                     if (error) {
-                        alert(grabError.data.message)
+                        this.$notify({
+                            group: 'foo',
+                            type: 'error',
+                            title: 'Error',
+                            text: grabError.data.message
+                        });
+                        this.$store.state.disabled = false
+                            this.$store.state.loading = false
                     }
                 }
             } else {
                 try {
                     await http_company.insertPost(this.formData).then(res => {
-                        console.log(res)
+                        if (res) {
+                            this.$router.push(`/contacts/bashhippo/companies/details/${res.data.companyId}`)
+
+                            this.$notify({
+                                group: 'foo',
+                                type: 'success',
+                                title: 'success',
+                                text: 'Company added successfully'
+                            });
+                            this.$store.state.disabled = false
+                            this.$store.state.loading = false
+                        }
                     })
                 } catch (error) {
                     let grabError = error.response
                     if (error) {
-                        alert(grabError.data.message)
+                        this.$notify({
+                            group: 'foo',
+                            type: 'error',
+                            title: 'Error',
+                            text: grabError.data.message
+                        });
+                        this.$store.state.disabled = false
+                        this.$store.state.loading = false
                     }
                 }
             }

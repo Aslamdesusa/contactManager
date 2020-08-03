@@ -19,10 +19,10 @@
                 <span>export</span>
             </router-link>
 
-            <v-btn rounded to="/contacts/bashhippo/companies/add" class="primary ml-2 mr-2" small>Add Company</v-btn>
+            <v-btn rounded text to="/contacts/bashhippo/companies/add" class="primary ml-2 mr-2" small>Add Company</v-btn>
 
-            <v-btn icon>
-                <v-icon>mdi-dots-vertical</v-icon>
+            <v-btn fab small outlined color="grey" width="30" height="30" class="">
+                <v-icon>mdi-menu</v-icon>
             </v-btn>
         </v-toolbar>
     </v-card>
@@ -40,7 +40,9 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {
+    mapState
+} from 'vuex'
 export default {
     data() {
         return {
