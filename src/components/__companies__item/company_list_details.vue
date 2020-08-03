@@ -42,7 +42,7 @@
             <v-list-item-group v-model="item">
                 <v-list-item v-for="(item, i) in posts" :key="i" :to="item._id">
                     <v-checkbox dense></v-checkbox>
-                    <v-list-item-title class="pa-5">{{item.companyName}}</v-list-item-title>
+                    <v-list-item-title class="pa-5" @click="passingData(item)">{{item.companyName}}</v-list-item-title>
                 </v-list-item>
             </v-list-item-group>
         </v-list>
@@ -76,11 +76,21 @@ export default {
     }),
     mounted() {
         this.$store.dispatch('loadPosts')
+        this.$store.dispatch('getPostById')
     },
     computed: {
         ...mapState([
-            'posts'
+            'posts',
+            'selectSingPost'
         ])
+    },
+    created(){
+        this.$store.state.companyId = this.$route.params.id
+    },
+    methods:{
+        passingData(data){
+            this.$store.state.selectSingPost = data
+        }
     }
 }
 </script>

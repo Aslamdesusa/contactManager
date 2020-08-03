@@ -6,15 +6,28 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
-        posts: []
+        posts: [],
+        selectSingPost: null,
+        companyId: null,
     },
     actions: {
-        loadPosts(){
-            axios
+        async loadPosts(){
+            await axios
             .get('/company/api/contact-manager/v1/get/companies')
             .then(res=>{
                 let posts = res.data.documents
                 this.commit('SET_POSTS', posts)
+            })
+            .catch(error=>{
+                console.log(error.response)
+            })
+        },
+        async getPostById(){
+            await axios
+            .get(`/company/api/contact-manager/v1/get/company/by/id?_id=${this.state.companyId}`)
+            .then(res=>{
+                let singleDoc = res.data.documents
+                this.commit('SET_GET', singleDoc)
             })
             .catch(error=>{
                 console.log(error.response)
@@ -24,6 +37,9 @@ export const store = new Vuex.Store({
     mutations:{
         SET_POSTS (state, posts) {
             state.posts = posts
+        },
+        SET_GET (state, singleDoc) {
+            state.selectSingPost = singleDoc
         }
     }
 })

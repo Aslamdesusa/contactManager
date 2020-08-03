@@ -1,16 +1,16 @@
 <template>
 <div>
-    <v-container>
-
+    <v-container v-if="this.$store.state.selectSingPost">
         <v-toolbar flat height="80">
+            
 
             <v-avatar color="orange" size="50">
                 <span class="white--text headline">62</span>
             </v-avatar>
 
             <div class="mt-5">
-                <v-toolbar-title class="ml-2 text-capitalize font-weight-light">Aslam Desusa</v-toolbar-title>
-                <span class="ma-4 grey--text caption">Test</span>
+                <v-toolbar-title class="ml-2 text-capitalize font-weight-light">{{this.$store.state.selectSingPost.companyName}}</v-toolbar-title>
+                <span class="ma-4 grey--text caption">{{this.$store.state.selectSingPost.description}}</span>
             </div>
             <v-icon class="ml-2" small>mdi-twitter</v-icon>
 
@@ -24,19 +24,19 @@
 
         <div class="text-sm-body-2 ml-16">
             <span class="ml-3">
-                <v-icon class="mr-2" small>mdi-earth</v-icon><a href="https://test.com">https://test.com</a>
+                <v-icon class="mr-2" small>mdi-earth</v-icon><a :href="this.$store.state.selectSingPost.website">{{this.$store.state.selectSingPost.website}}</a>
             </span>
             <span>
-                <v-icon class="ml-2 mr-2" small>mdi-phone-classic</v-icon>+918076979639
+                <v-icon class="ml-2 mr-2" small>mdi-phone-classic</v-icon>{{this.$store.state.selectSingPost.phone}}
             </span>
             <span>
-                <v-icon class="ml-2 mr-2">mdi-fax</v-icon> +1 323 555 1234
+                <v-icon class="ml-2 mr-2">mdi-fax</v-icon> {{this.$store.state.selectSingPost.fax}}
             </span>
         </div>
 
         <div class="text-sm-body-2 ml-16">
             <v-chip small class="ma-2" close color="" text-color="black" @click:close="close">
-                Tags
+                {{this.$store.state.selectSingPost.tags}}
             </v-chip>
             <span>
                 <a href="#" style="text-decoration: none;">+ Add Tags</a>
@@ -64,10 +64,10 @@
                     <v-card flat>
                         <v-row>
                             <v-col cols="12" sm="6">
-                                <v-card>
+                                <v-card v-if="this.$store.state.selectSingPost.address.billingAddress">
                                     <v-card-title class="button">Billing Address</v-card-title>
 
-                                    <v-card-subtitle class="mt-4">a-43 indra vikash samiti tahirpur delhi 110095, Delhi Delhi, 110095 India</v-card-subtitle>
+                                    <v-card-subtitle class="mt-4">{{this.$store.state.selectSingPost.address.billingAddress.billingStreet}}, {{ this.$store.state.selectSingPost.address.billingAddress.billingCity}} <br> {{ this.$store.state.selectSingPost.address.billingAddress.billingState}}, {{ this.$store.state.selectSingPost.address.billingAddress.billingZipCode}} {{ this.$store.state.selectSingPost.address.billingAddress.billingCountry}}</v-card-subtitle>
                                 </v-card>
                             </v-col>
                             <v-col cols="12" sm="6">
