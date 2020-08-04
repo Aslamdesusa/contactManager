@@ -6,6 +6,17 @@ import NProgress from "nprogress";
 Vue.use(VueRouter)
 
   const routes = [
+  // signup and login page
+  {
+    path: '/contactmanager',
+    name: 'contactmanager',
+    // route level code-splitting
+    // this generates a separate chunk (Company_Details.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "Company_Details" */ '../views/index.vue')
+  },
+  // end
+
   // deshboard routes
   {
     path: '/contacts/:portal/deshboard',

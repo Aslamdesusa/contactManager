@@ -1,7 +1,7 @@
 <template>
 <div class="single_page_details">
-    <v-navigation-drawer style="position: relative; margin-top: -12px;" permanent height="95vh" width>
-        <v-list class="top-header-sticky grey lighten-5" style="top: 0px;">
+    <v-navigation-drawer style="position: relative; margin-top: -12px; background: #f9f9f9;" permanent height="95vh" width>
+        <v-list class="top-header-sticky" style="top: 0px; background: #ffffff;">
             <v-list-item>
                 <v-list-item-content>
                     <v-menu offset-y>
@@ -44,7 +44,7 @@
             <v-list-item-group v-model="item">
                 <v-list-item v-for="(item, i) in contactPost" :key="i" :to="item._id">
                     <v-checkbox dense></v-checkbox>
-                    <v-list-item-title class="pa-5" @click="passingData(item)">{{item.contactName}}</v-list-item-title>
+                    <v-list-item-title class="pa-5 indigo--text" @click="passingData(item)">{{item.contactName}}</v-list-item-title>
                 </v-list-item>
             </v-list-item-group>
         </v-list>

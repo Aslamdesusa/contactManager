@@ -60,7 +60,7 @@
 
                                         <v-card-actions>
                                             <v-spacer></v-spacer>
-                                            <v-btn :loading="this.$store.state.loading" color="red" text>
+                                            <v-btn :loading="this.$store.state.loading" color="red" text @click="deleteCompany">
                                                 Okay, Go ahead
                                             </v-btn>
                                             <v-btn :disabled="this.$store.state.disabled" color="grey" text @click="dialog = false">
@@ -265,42 +265,42 @@ export default {
                 }
             }
         },
-        // async deleteCompany() {
-        //     this.$store.state.disabled = true
-        //     this.$store.state.loading = true
-        //     try {
-        //         await http_companies.deleteCompanyData(this.$route.params.id).then(res => {
-        //             if (res) {
-        //                 this.$router.push({
-        //                     name: 'Company',
-        //                     params: {
-        //                         portal: 'bashhippo'
-        //                     }
-        //                 })
-        //                 this.$notify({
-        //                     group: 'foo',
-        //                     type: 'success',
-        //                     title: 'success',
-        //                     text: 'Company deleted successfully'
-        //                 });
-        //                 this.$store.state.disabled = false
-        //                 this.$store.state.loading = false
-        //             }
-        //         })
-        //     } catch (error) {
-        //         let grabError = error.response
-        //         if (error) {
-        //             this.$notify({
-        //                 group: 'foo',
-        //                 type: 'error',
-        //                 title: 'Error',
-        //                 text: grabError.data.message
-        //             });
-        //             this.$store.state.disabled = false
-        //             this.$store.state.loading = false
-        //         }
-        //     }
-        // },
+        async deleteCompany() {
+            this.$store.state.disabled = true
+            this.$store.state.loading = true
+            try {
+                await http_contact.deleteContacts(this.$route.params.id).then(res => {
+                    if (res) {
+                        this.$router.push({
+                            name: 'Contacts',
+                            params: {
+                                portal: 'bashhippo'
+                            }
+                        })
+                        this.$notify({
+                            group: 'foo',
+                            type: 'success',
+                            title: 'success',
+                            text: 'Contact deleted successfully'
+                        });
+                        this.$store.state.disabled = false
+                        this.$store.state.loading = false
+                    }
+                })
+            } catch (error) {
+                let grabError = error.response
+                if (error) {
+                    this.$notify({
+                        group: 'foo',
+                        type: 'error',
+                        title: 'Error',
+                        text: grabError.data.message
+                    });
+                    this.$store.state.disabled = false
+                    this.$store.state.loading = false
+                }
+            }
+        },
         async close(eventTag, index) {
             try {
                 await http_contact.updateTags({

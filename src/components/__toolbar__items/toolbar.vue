@@ -7,11 +7,11 @@
         <!-- end -->
 
         <!-- Navbar Image -->
-        <img height="27" src="https://106c4.wpc.azureedge.net/80106C4/Gallery-Prod/cdn/2015-02-24/prod20161101-microsoft-windowsazure-gallery/zohocorporationprivatelimited.zohocontactmanager.1.0.1/Icon/Large.png" alt="Brand Icon">
+        <img height="27" src="https://zohowebstatic.com/sites/default/files/styles/product-home-page/public/icon-contactmanager_1_2.png?itok=bm20CdxI" alt="Brand Icon">
         <!-- end -->
 
         <!-- Brand Name -->
-        <span class="ml-1 text-sm-body-1 font-weight-medium">ContactManager</span>
+        <span class="ml-1 text-sm-body-1 font-weight-medium" >ContactManager</span>
         <!-- end -->
 
         <v-spacer></v-spacer>
@@ -52,7 +52,7 @@
     <!-- end -->
 
     <!-- Navigation Bar -->
-    <NavigationBar />
+    <NavigationBar v-if="show"/>
     <!-- end -->
 </v-app>
 </template>
@@ -65,7 +65,7 @@ export default {
     },
     data() {
         return {
-           //
+           show: false
         }
     }
 }
