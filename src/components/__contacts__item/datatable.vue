@@ -26,10 +26,10 @@
             </v-btn>
         </v-toolbar>
     </v-card>
-    <v-data-table v-model="selected" item-key="name" show-select :headers="headers" :items="posts" class="elevation-1">
-        <template v-slot:item.companyName="{ item }">
-            <router-link v-if="item.companyName" class="mr-1" style="text-decoration: none !important;" :to="{ name: 'CompanyDetails', params: { id: item._id }}">
-                <span>{{item.companyName}}</span>
+    <v-data-table v-model="selected" item-key="name" show-select :headers="headers" :items="contactPost" class="elevation-1">
+        <template v-slot:item.contactName="{ item }">
+            <router-link v-if="item.contactName" class="mr-1" style="text-decoration: none !important;" :to="{ name: 'CompanyDetails', params: { id: item._id }}">
+                <span>{{item.contactName}}</span>
             </router-link>
             <span v-else>
                 --
@@ -49,32 +49,32 @@ export default {
             dropdown_font: ['All Companies', 'My Companies', 'Recently Updated', 'Recently Viewed', 'Not Updated In 30 Days'],
             selected: [],
             headers: [{
-                    text: 'Company Name',
+                    text: 'Name',
                     align: 'start',
                     sortable: false,
-                    value: 'companyName',
+                    value: 'contactName',
                 },
                 {
-                    text: 'Website',
-                    value: 'website'
+                    text: 'Company',
+                    value: 'companyId'
                 },
                 {
-                    text: 'Phone',
-                    value: 'phone'
+                    text: 'Email',
+                    value: 'contactInfo.email'
                 },
                 {
                     text: 'Billing Country',
-                    value: 'address.billingAddress.billingCountry'
+                    value: 'contactInfo.workPhone'
                 },
             ],
         }
     },
     mounted() {
-        this.$store.dispatch('loadPosts')
+        this.$store.dispatch('loadContactPosts')
     },
     computed: {
         ...mapState([
-            'posts'
+            'contactPost'
         ])
     }
 }

@@ -6,13 +6,20 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
+        // globle companis state
         posts: [],
         selectSingPost: null,
         companyId: null,
+
+        // globle state
         disabled: false,
         loading: false,
+
+        // globle contact state
+        contactPost: [],
     },
     actions: {
+        // companies actions
         async loadPosts(){
             await axios
             .get('/company/api/contact-manager/v1/get/companies')
@@ -33,22 +40,39 @@ export const store = new Vuex.Store({
             })
             .catch(error=>{
                 console.log(error.response)
+                throw error
             })
-        }
+        },
+        // end
+
+        // contact actions
+        async loadContactPosts(){
+            await axios
+            .get('/contact/api/contact-manager/v1/get/contacts')
+            .then(res=>{
+                let contactPosts = res.data.documents
+                this.commit('SET_CONTACT_POSTS', contactPosts)
+            })
+            .catch(error=>{
+                throw error
+            })
+        },
+        // end
     },
     mutations:{
+        // companies mutations
         SET_POSTS (state, posts) {
             state.posts = posts
         },
         SET_GET (state, singleDoc) {
             state.selectSingPost = singleDoc
         },
+        // end
+        
+        SET_CONTACT_POSTS (state, contactPosts) {
+            state.contactPost = contactPosts
+        },
     }
 })
 
 
-export const contact = new Vuex.Store({
-    state: {
-        posts: [],
-    },
-})

@@ -1,6 +1,6 @@
 <template>
   <div class="contacts">
-    <noRecord />
+    <noRecord v-if="noRecord"/>
     <contactDataTable />
   </div>
 </template>
@@ -15,6 +15,11 @@ export default {
   components:{
     noRecord,
     contactDataTable
+  },
+  data(){
+    return{
+      noRecord: false
+    }
   }
 }
 </script>
