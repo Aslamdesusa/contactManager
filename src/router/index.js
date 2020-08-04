@@ -66,6 +66,22 @@ Vue.use(VueRouter)
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "company_details" */ '../views/contacts_item/contact_details.vue')
   },
+  {
+    path: '/contacts/:portal/contacts/add',
+    name: 'Contact_Form',
+    // route level code-splitting
+    // this generates a separate chunk (contact_form.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "contact form" */ '../views/contacts_item/contact_form.vue')
+  },
+  {
+    path: '/contacts/:portal/contacts/edit/:id',
+    name: 'EditContactDetails',
+    // route level code-splitting
+    // this generates a separate chunk (Company_Details.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "Company_Details" */ '../views/contacts_item/contact_form')
+  },
   // end
 ]
 

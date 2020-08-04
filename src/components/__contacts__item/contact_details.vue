@@ -16,7 +16,7 @@
                 <span class="ma-4 grey--text caption">{{selectPostContact.description}}</span>
             </div>
             <v-spacer></v-spacer>
-            <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small :to="{name: 'EditCompanyDetails', params: {id: selectPostContact._id}}">Edit</v-btn>
+            <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small :to="{name: 'EditContactDetails', params: {id: selectPostContact._id}}">Edit</v-btn>
             <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small>New Record</v-btn>
 
             <v-menu offset-y>

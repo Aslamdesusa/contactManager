@@ -112,22 +112,10 @@ export default {
                 avatarUrl: 'hello',
             },
             tab: null,
-            items: [{
-                    tab: 'Address',
-                    content: 'Tab 1 Content'
-                },
-                {
-                    tab: 'Custom Fields',
-                    content: 'Tab 2 Content'
-                },
-            ],
             rules: [
                 value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
             ],
         }
-    },
-    mounted() {
-        this.$store.dispatch('getPostById')
     },
     computed: {
         ...mapState([
@@ -137,6 +125,7 @@ export default {
     created() {
         if (this.$route.params.id) {
             this.$store.state.companyId = this.$route.params.id
+            this.$store.dispatch('getPostById')
         }
     },
     watch: {

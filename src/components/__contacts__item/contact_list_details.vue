@@ -8,7 +8,7 @@
                         <template v-slot:activator="{ on, attrs }">
                             <v-list-item-title class="subtitle-1 d-flex">
                                 <v-checkbox dense></v-checkbox>
-                                <span class=" mt-6 d-inline-block text-truncate" style="max-width: 140px;">All Companies</span>
+                                <span class="mt-6 d-inline-block text-truncate" style="max-width: 140px;">All Contacts</span>
                                 <v-btn v-bind="attrs" v-on="on" class="mt-4" text icon color="grey">
                                     <v-icon>mdi-arrow-down-drop-circle-outline</v-icon>
                                 </v-btn>
@@ -29,7 +29,7 @@
 
                 <v-list-item-action>
                     <div>
-                        <v-btn to="/contacts/bashhippo/companies/add" fab small text color="white" width="30" height="30" class="light-blue mr-2">
+                        <v-btn to="/contacts/bashhippo/contacts/add" fab small text color="white" width="30" height="30" class="light-blue mr-2">
                             <v-icon>mdi-plus</v-icon>
                         </v-btn>
                         <v-btn fab small outlined color="grey" width="30" height="30" class="">
@@ -60,10 +60,10 @@ export default {
     data: () => ({
         item: null,
         items: [{
-                title: 'All Companies'
+                title: 'All Contacts'
             },
             {
-                title: 'My Companies'
+                title: 'My Contacts'
             },
             {
                 title: 'Recently Updated'
