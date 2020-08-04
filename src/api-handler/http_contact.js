@@ -3,6 +3,7 @@ const deleteUrl = '/contact/api/contact-manager/v1/delete/contact'
 const postUrl = '/contact/api/contact-manager/v1/create/contact' 
 const contactEditUrl = '/contact/api/contact-manager/v1/edit/contact/by/id'
 const addMoreTags = '/contact/api/contact-manager/v1/add/tags'
+const updateTags = '/contact/api/contact-manager/v1/delete/tags'
 
 class contacts {
     // create new company
@@ -19,6 +20,20 @@ class contacts {
 
     static addMoreTags(data, _id){
         return axios.put(`${addMoreTags}?_id=${_id}`, {
+          //   User Details
+            tags: data.tags,
+        })
+        .then(function(res){
+            return res
+        }).catch((err) =>{
+            // console.log(err.response)
+            throw(err)
+            // return err.response
+        })
+    }
+
+    static updateTags(data, _id){
+        return axios.put(`${updateTags}?_id=${_id}`, {
           //   User Details
             tags: data.tags,
         })

@@ -301,33 +301,33 @@ export default {
         //         }
         //     }
         // },
-        // async close(eventTag, index) {
-        //     try {
-        //         await http_companies.updateTags({
-        //             tags: [eventTag]
-        //         }, this.$route.params.id).then(res => {
-        //             if (res) {
-        //                 this.$store.state.selectSingPost.tags.splice(index, 1)
-        //                 this.$notify({
-        //                     group: 'foo',
-        //                     type: 'success',
-        //                     title: 'success',
-        //                     text: 'Tag removed successfully'
-        //                 });
-        //             }
-        //         })
-        //     } catch (error) {
-        //         let grabError = error.response
-        //         if (error) {
-        //             this.$notify({
-        //                 group: 'foo',
-        //                 type: 'error',
-        //                 title: 'Error',
-        //                 text: grabError.data.message
-        //             });
-        //         }
-        //     }
-        // },
+        async close(eventTag, index) {
+            try {
+                await http_contact.updateTags({
+                    tags: [eventTag]
+                }, this.$route.params.id).then(res => {
+                    if (res) {
+                        this.selectPostContact.tags.splice(index, 1)
+                        this.$notify({
+                            group: 'foo',
+                            type: 'success',
+                            title: 'success',
+                            text: 'Tag removed successfully'
+                        });
+                    }
+                })
+            } catch (error) {
+                let grabError = error.response
+                if (error) {
+                    this.$notify({
+                        group: 'foo',
+                        type: 'error',
+                        title: 'Error',
+                        text: grabError.data.message
+                    });
+                }
+            }
+        },
     }
 }
 </script>
