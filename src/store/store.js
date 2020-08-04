@@ -45,3 +45,10 @@ export const store = new Vuex.Store({
         },
     }
 })
+
+
+export const contact = new Vuex.Store({
+    state: {
+        posts: [],
+    },
+})
