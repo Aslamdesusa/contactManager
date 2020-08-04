@@ -45,34 +45,7 @@ class companies {
     }
     // create new company
     static insertPost(data){
-        return axios.post(`${companyUrl}`, {
-          //   User Details
-            userId: data.userId,
-            companyName: data.companyName,
-            website: data.website,
-            description: data.description,
-            phone: data.phone,
-            fax: data.fax,
-            tags: data.tags,
-            address: {
-                billingAddress: {
-                    billingStreet: data.address.billingAddress.billingStreet,
-                    billingCity: data.address.billingAddress.billingCity,
-                    billingState: data.address.billingAddress.billingState,
-                    billingCountry: data.address.billingAddress.billingCountry,
-                    billingZipCode: data.address.billingAddress.billingZipCode
-                },
-                // Shipping Address
-                shippingAddress: {
-                    shippingStreet: data.address.shippingAddress.shippingStreet,
-                    shippingCity: data.address.shippingAddress.shippingCity,
-                    shippingState: data.address.shippingAddress.shippingState,
-                    shippingCountry: data.address.shippingAddress.shippingCountry,
-                    shippingZipCode: data.address.shippingAddress.shippingZipCode
-                }
-            },
-            avatarUrl: data.avatarUrl,
-        })
+        return axios.post(`${companyUrl}`, data)
         .then(function(res){
             return res
         }).catch((err) =>{

@@ -2,11 +2,26 @@ import axios from 'axios'
 const deleteUrl = '/contact/api/contact-manager/v1/delete/contact'
 const postUrl = '/contact/api/contact-manager/v1/create/contact' 
 const contactEditUrl = '/contact/api/contact-manager/v1/edit/contact/by/id'
+const addMoreTags = '/contact/api/contact-manager/v1/add/tags'
 
 class contacts {
     // create new company
     static insertPost(data){
         return axios.post(`${postUrl}`, data)
+        .then(function(res){
+            return res
+        }).catch((err) =>{
+            // console.log(err.response)
+            throw(err)
+            // return err.response
+        })
+    }
+
+    static addMoreTags(data, _id){
+        return axios.put(`${addMoreTags}?_id=${_id}`, {
+          //   User Details
+            tags: data.tags,
+        })
         .then(function(res){
             return res
         }).catch((err) =>{
