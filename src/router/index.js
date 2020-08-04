@@ -6,11 +6,15 @@ import NProgress from "nprogress";
 Vue.use(VueRouter)
 
   const routes = [
+  // deshboard routes
   {
     path: '/contacts/:portal/deshboard',
     name: 'Home',
     component: Home
   },
+  // end
+
+  // companies routes
   {
     path: '/contacts/:portal/companies',
     name: 'Company',
@@ -18,14 +22,6 @@ Vue.use(VueRouter)
     // this generates a separate chunk (company.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "company" */ '../views/company_item/company.vue')
-  },
-  {
-    path: '/contacts/:portal/contacts',
-    name: 'Contacts',
-    // route level code-splitting
-    // this generates a separate chunk (contacts.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "contacts" */ '../views/contacts_item/contacts.vue')
   },
   {
     path: '/contacts/:portal/companies/add',
@@ -50,7 +46,27 @@ Vue.use(VueRouter)
     // this generates a separate chunk (Company_Details.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "Company_Details" */ '../views/company_item/company_form.vue')
-  }
+  },
+  // end
+
+  // contact routes
+  {
+    path: '/contacts/:portal/contacts',
+    name: 'Contacts',
+    // route level code-splitting
+    // this generates a separate chunk (contacts.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "contacts" */ '../views/contacts_item/contacts.vue')
+  },
+  {
+    path: '/contacts/:portal/contacts/details/:id',
+    name: 'ContactDetails',
+    // route level code-splitting
+    // this generates a separate chunk (company_details.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "company_details" */ '../views/contacts_item/contact_details.vue')
+  },
+  // end
 ]
 
 const router = new VueRouter({

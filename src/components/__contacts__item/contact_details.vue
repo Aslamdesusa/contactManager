@@ -1,20 +1,22 @@
 <template>
 <div>
-    <v-container v-if="this.$store.state.selectSingPost" class="ma-0 pa-0">
-        <v-toolbar flat height="80">
+    <v-container v-if="selectPostContact" class="ma-0 pa-0">
+        <v-toolbar flat height="100">
 
             <v-avatar color="orange" size="50">
                 <span class="white--text headline">62</span>
             </v-avatar>
             <div class="mt-5">
                 <v-toolbar-title class="ml-2 text-capitalize font-weight-light">
-                    {{this.$store.state.selectSingPost.companyName}}
+                    {{selectPostContact.contactName}}
                     <v-icon class="ml-2" small>mdi-twitter</v-icon>
                 </v-toolbar-title>
-                <span class="ma-4 grey--text caption">{{this.$store.state.selectSingPost.description}}</span>
+                <span class="ma-4">{{selectPostContact.title}} At {{selectPostContact.companyId}}</span>
+                <br>
+                <span class="ma-4 grey--text caption">{{selectPostContact.description}}</span>
             </div>
             <v-spacer></v-spacer>
-            <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small :to="{name: 'EditCompanyDetails', params: {id: this.$store.state.selectSingPost._id}}">Edit</v-btn>
+            <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small :to="{name: 'EditCompanyDetails', params: {id: selectPostContact._id}}">Edit</v-btn>
             <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small>New Record</v-btn>
 
             <v-menu offset-y>
@@ -64,20 +66,23 @@
         </v-toolbar>
 
         <div class="text-sm-body-2 ml-16">
-            <span class="ml-3" v-if="this.$store.state.selectSingPost.website">
-                <v-icon class="mr-2" small>mdi-earth</v-icon><a :href="this.$store.state.selectSingPost.website">{{this.$store.state.selectSingPost.website}}</a>
+            <span class="ml-3" v-if="selectPostContact.contactInfo.email">
+                <v-icon class="mr-2" small>mdi-email</v-icon><a :href="selectPostContact.contactInfo.email">{{selectPostContact.contactInfo.email}}</a>
             </span>
-            <span v-if="this.$store.state.selectSingPost.phone">
-                <v-icon class="ml-2 mr-2" small>mdi-phone-classic</v-icon>{{this.$store.state.selectSingPost.phone}}
+            <span v-if="selectPostContact.contactInfo.mobile">
+                <v-icon class="ml-2 mr-2" small>mdi-cellphone</v-icon>{{selectPostContact.contactInfo.mobile}}
             </span>
-            <span v-if="this.$store.state.selectSingPost.fax">
-                <v-icon class="ml-2 mr-2">mdi-fax</v-icon> {{this.$store.state.selectSingPost.fax}}
+            <span v-if="selectPostContact.contactInfo.workPhone">
+                <v-icon class="ml-2 mr-2">mdi-phone</v-icon> {{selectPostContact.contactInfo.workPhone}}
+            </span>
+            <span v-if="selectPostContact.contactInfo.homePhone">
+                <v-icon class="ml-2 mr-2">mdi-phone-classic</v-icon> {{selectPostContact.contactInfo.homePhone}}
             </span>
         </div>
 
         <div class="text-sm-body-2 ml-16">
-            <span v-if="this.$store.state.selectSingPost.tags.length">
-                <v-chip small class="ma-2" close color="" text-color="black" v-for="(item, i) in this.$store.state.selectSingPost.tags" :key="i" @click:close="close(item, i)">
+            <span v-if="selectPostContact.tags.length">
+                <v-chip small class="ma-2" close color="" text-color="black" v-for="(item, i) in selectPostContact.tags" :key="i" @click:close="close(item, i)">
                     {{item}}
                 </v-chip>
             </span>
@@ -113,7 +118,10 @@
                     Overview
                 </v-tab>
                 <v-tab class="text-capitalize">
-                    Contacts
+                    Timelinne
+                </v-tab>
+                <v-tab class="text-capitalize">
+                    Emails
                 </v-tab>
                 <v-tab class="text-capitalize">
                     Social
@@ -128,28 +136,10 @@
                     <v-card flat>
                         <v-row>
                             <v-col cols="12" sm="6">
-                                <v-card v-if="this.$store.state.selectSingPost.address.billingAddress">
-                                    <div v-if="toggleAddress">
-                                        <div class="d-flex">
-                                            <v-card-title class="button">Billing Address</v-card-title>
-                                            <v-spacer></v-spacer>
-                                            <v-btn @click="toggleAdd" class="ma-2" text icon color="grey lighten-1">
-                                                <v-icon>mdi-arrow-right-drop-circle-outline</v-icon>
-                                            </v-btn>
-                                        </div>
-
-                                        <v-card-subtitle>{{this.$store.state.selectSingPost.address.billingAddress.billingStreet}}, {{ this.$store.state.selectSingPost.address.billingAddress.billingCity}} <br> {{ this.$store.state.selectSingPost.address.billingAddress.billingState}}, {{ this.$store.state.selectSingPost.address.billingAddress.billingZipCode}} {{ this.$store.state.selectSingPost.address.billingAddress.billingCountry}}</v-card-subtitle>
-                                    </div>
-                                    <div v-else>
-                                        <div class="d-flex">
-                                            <v-card-title class="button">Shipping Address</v-card-title>
-                                            <v-spacer></v-spacer>
-                                            <v-btn @click="toggleAdd" class="ma-2" text icon color="grey lighten-1">
-                                                <v-icon>mdi-arrow-left-drop-circle-outline</v-icon>
-                                            </v-btn>
-                                        </div>
-
-                                        <v-card-subtitle>{{this.$store.state.selectSingPost.address.shippingAddress.shippingStreet}}, {{ this.$store.state.selectSingPost.address.shippingAddress.shippingCity}} <br> {{ this.$store.state.selectSingPost.address.shippingAddress.shippingState}}, {{ this.$store.state.selectSingPost.address.shippingAddress.shippingZipCode}} {{ this.$store.state.selectSingPost.address.shippingAddress.shippingCountry}}</v-card-subtitle>
+                                <v-card v-if="selectPostContact.address">
+                                    <div>
+                                        <v-card-title class="button">Address</v-card-title>
+                                        <v-card-subtitle>{{selectPostContact.address.mailingStreet}}, {{ selectPostContact.address.mailingCity}} <br> {{ selectPostContact.address.mailingState}}, {{ selectPostContact.address.mailingCountry}} {{ selectPostContact.address.mailingZipCode}}</v-card-subtitle>
                                     </div>
                                 </v-card>
                             </v-col>
@@ -161,45 +151,6 @@
                                         <v-avatar color="orange" size="50">
                                             <span class="white--text headline">AD</span>
                                         </v-avatar>
-                                    </v-card-subtitle>
-                                </v-card>
-                            </v-col>
-                            <v-col cols="12" sm="6">
-                                <v-card>
-                                    <v-card-title class="button mb-3">Contact Persons</v-card-title>
-
-                                    <v-card-subtitle>
-                                        <div>
-                                            <v-avatar color="green" size="36">
-                                                <span class="white--text">AD</span>
-                                            </v-avatar>
-                                            <span class="primary--text ml-2">Aslam Desusa</span> <span>Tile</span>
-                                        </div>
-                                        <div class="ml-8 pt-0 d-flex">
-                                            <span class="d-inline-block text-truncate" style="max-width: 150px;">
-                                                <v-icon small>mdi-email</v-icon><span class="text-truncate">aslam17@navgurukul.org</span>
-                                            </span>
-                                            <span class="d-inline-block text-truncate" style="max-width: 150px;">
-                                                <v-icon small>mdi-phone-classic</v-icon><span>+91 8787676567</span>
-                                            </span>
-                                        </div>
-                                    </v-card-subtitle>
-                                    <v-divider></v-divider>
-                                    <v-card-subtitle>
-                                        <div>
-                                            <v-avatar color="green" size="36">
-                                                <span class="white--text">AD</span>
-                                            </v-avatar>
-                                            <span class="primary--text ml-2">Aslam Desusa</span> <span>Tile</span>
-                                        </div>
-                                        <div class="ml-8 pt-0 d-flex">
-                                            <span class="d-inline-block text-truncate" style="max-width: 150px;">
-                                                <v-icon small>mdi-email</v-icon><span class="text-truncate">aslam17@navgurukul.org</span>
-                                            </span>
-                                            <span class="d-inline-block text-truncate" style="max-width: 150px;">
-                                                <v-icon small>mdi-phone-classic</v-icon><span>+91 8787676567</span>
-                                            </span>
-                                        </div>
                                     </v-card-subtitle>
                                 </v-card>
                             </v-col>
@@ -219,13 +170,15 @@
 
 <script>
 import http_companies from '../../api-handler/http_company'
+import {
+    mapState
+} from 'vuex'
 export default {
     data() {
         return {
             menu: false,
             tags: [],
             dialog: false,
-            toggleAddress: true,
             tab: null,
             colors: [
                 'indigo',
@@ -244,10 +197,21 @@ export default {
             ],
         }
     },
+    created() {
+        this.$store.state.contactId = this.$route.params.id
+    },
+    mounted() {
+        this.$store.dispatch('getContactPostById')
+    },
+    computed: {
+        ...mapState([
+            'selectPostContact',
+        ])
+    },
     methods: {
         closePage() {
             this.$router.push({
-                name: 'Company',
+                name: 'Contacts',
                 params: {
                     portal: 'bashhippo'
                 }
@@ -319,12 +283,6 @@ export default {
                     this.$store.state.loading = false
                 }
             }
-        },
-        toggleAdd() {
-            this.toggleAddress ? this.toggleAddress = false : this.toggleAddress = true
-        },
-        editPost() {
-            console.log(this.$store.state.selectSingPost)
         },
         async close(eventTag, index) {
             try {

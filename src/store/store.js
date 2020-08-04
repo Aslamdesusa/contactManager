@@ -17,6 +17,8 @@ export const store = new Vuex.Store({
 
         // globle contact state
         contactPost: [],
+        selectPostContact: null,
+        contactId: null
     },
     actions: {
         // companies actions
@@ -57,6 +59,19 @@ export const store = new Vuex.Store({
                 throw error
             })
         },
+
+        async getContactPostById(){
+            await axios
+            .get(`/contact/api/contact-manager/v1/get/contact/by/id?_id=${this.state.contactId}`)
+            .then(res=>{
+                let singleDoc = res.data.documents
+                this.commit('SET_GET_CONTACT', singleDoc)
+            })
+            .catch(error=>{
+                console.log(error.response)
+                throw error
+            })
+        },
         // end
     },
     mutations:{
@@ -69,9 +84,15 @@ export const store = new Vuex.Store({
         },
         // end
         
+        // contact mutations
         SET_CONTACT_POSTS (state, contactPosts) {
             state.contactPost = contactPosts
         },
+        SET_GET_CONTACT (state, singleDoc) {
+            state.selectPostContact = singleDoc
+        }
+        // end
+
     }
 })
 

@@ -28,7 +28,7 @@
     </v-card>
     <v-data-table v-model="selected" item-key="name" show-select :headers="headers" :items="contactPost" class="elevation-1">
         <template v-slot:item.contactName="{ item }">
-            <router-link v-if="item.contactName" class="mr-1" style="text-decoration: none !important;" :to="{ name: 'CompanyDetails', params: { id: item._id }}">
+            <router-link v-if="item.contactName" class="mr-1" style="text-decoration: none !important;" :to="{ name: 'ContactDetails', params: { id: item._id }}">
                 <span>{{item.contactName}}</span>
             </router-link>
             <span v-else>
