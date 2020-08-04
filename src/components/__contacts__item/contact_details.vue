@@ -60,7 +60,7 @@
 
                                         <v-card-actions>
                                             <v-spacer></v-spacer>
-                                            <v-btn :loading="this.$store.state.loading" color="red" text @click="deleteCompany">
+                                            <v-btn :loading="this.$store.state.loading" color="red" text>
                                                 Okay, Go ahead
                                             </v-btn>
                                             <v-btn :disabled="this.$store.state.disabled" color="grey" text @click="dialog = false">
@@ -186,7 +186,7 @@
 </template>
 
 <script>
-import http_companies from '../../api-handler/http_company'
+import http_contact from '../../api-handler/http_contact'
 import {
     mapState
 } from 'vuex'
@@ -238,12 +238,12 @@ export default {
             this.$store.state.disabled = true
             this.$store.state.loading = true
             try {
-                await http_companies.addMoreTags({
+                await http_contact.addMoreTags({
                     tags: this.tags
                 }, this.$route.params.id).then(res => {
                     if (res) {
                         this.tags.map(val => {
-                            this.$store.state.selectSingPost.tags.push(val)
+                            this.selectPostContact.tags.push(val)
                             this.tags = []
                             this.menu = false
                             this.$store.state.disabled = false
@@ -265,69 +265,69 @@ export default {
                 }
             }
         },
-        async deleteCompany() {
-            this.$store.state.disabled = true
-            this.$store.state.loading = true
-            try {
-                await http_companies.deleteCompanyData(this.$route.params.id).then(res => {
-                    if (res) {
-                        this.$router.push({
-                            name: 'Company',
-                            params: {
-                                portal: 'bashhippo'
-                            }
-                        })
-                        this.$notify({
-                            group: 'foo',
-                            type: 'success',
-                            title: 'success',
-                            text: 'Company deleted successfully'
-                        });
-                        this.$store.state.disabled = false
-                        this.$store.state.loading = false
-                    }
-                })
-            } catch (error) {
-                let grabError = error.response
-                if (error) {
-                    this.$notify({
-                        group: 'foo',
-                        type: 'error',
-                        title: 'Error',
-                        text: grabError.data.message
-                    });
-                    this.$store.state.disabled = false
-                    this.$store.state.loading = false
-                }
-            }
-        },
-        async close(eventTag, index) {
-            try {
-                await http_companies.updateTags({
-                    tags: [eventTag]
-                }, this.$route.params.id).then(res => {
-                    if (res) {
-                        this.$store.state.selectSingPost.tags.splice(index, 1)
-                        this.$notify({
-                            group: 'foo',
-                            type: 'success',
-                            title: 'success',
-                            text: 'Tag removed successfully'
-                        });
-                    }
-                })
-            } catch (error) {
-                let grabError = error.response
-                if (error) {
-                    this.$notify({
-                        group: 'foo',
-                        type: 'error',
-                        title: 'Error',
-                        text: grabError.data.message
-                    });
-                }
-            }
-        },
+        // async deleteCompany() {
+        //     this.$store.state.disabled = true
+        //     this.$store.state.loading = true
+        //     try {
+        //         await http_companies.deleteCompanyData(this.$route.params.id).then(res => {
+        //             if (res) {
+        //                 this.$router.push({
+        //                     name: 'Company',
+        //                     params: {
+        //                         portal: 'bashhippo'
+        //                     }
+        //                 })
+        //                 this.$notify({
+        //                     group: 'foo',
+        //                     type: 'success',
+        //                     title: 'success',
+        //                     text: 'Company deleted successfully'
+        //                 });
+        //                 this.$store.state.disabled = false
+        //                 this.$store.state.loading = false
+        //             }
+        //         })
+        //     } catch (error) {
+        //         let grabError = error.response
+        //         if (error) {
+        //             this.$notify({
+        //                 group: 'foo',
+        //                 type: 'error',
+        //                 title: 'Error',
+        //                 text: grabError.data.message
+        //             });
+        //             this.$store.state.disabled = false
+        //             this.$store.state.loading = false
+        //         }
+        //     }
+        // },
+        // async close(eventTag, index) {
+        //     try {
+        //         await http_companies.updateTags({
+        //             tags: [eventTag]
+        //         }, this.$route.params.id).then(res => {
+        //             if (res) {
+        //                 this.$store.state.selectSingPost.tags.splice(index, 1)
+        //                 this.$notify({
+        //                     group: 'foo',
+        //                     type: 'success',
+        //                     title: 'success',
+        //                     text: 'Tag removed successfully'
+        //                 });
+        //             }
+        //         })
+        //     } catch (error) {
+        //         let grabError = error.response
+        //         if (error) {
+        //             this.$notify({
+        //                 group: 'foo',
+        //                 type: 'error',
+        //                 title: 'Error',
+        //                 text: grabError.data.message
+        //             });
+        //         }
+        //     }
+        // },
     }
 }
 </script>
