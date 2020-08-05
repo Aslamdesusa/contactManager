@@ -22,3 +22,13 @@
     </v-list>
 </v-card>
 </template>
+
+<script>
+export default {
+    data(){
+        return{
+            settings: []
+        }
+    }
+}
+</script>

@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+const token = localStorage.getItem('user_token')
+axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
 
 Vue.use(Vuex);
 
@@ -18,7 +20,10 @@ export const store = new Vuex.Store({
         // globle contact state
         contactPost: [],
         selectPostContact: null,
-        contactId: null
+        contactId: null,
+
+        // local storage items
+        userToken: null
     },
     actions: {
         // companies actions

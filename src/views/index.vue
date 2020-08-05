@@ -21,9 +21,9 @@
             <v-col cols="4">
                 <div v-if="signup">
                     <h3 class="mb-9">Start your 14 days free trial</h3>
-                    <v-text-field v-model="user.portals.portal" label="Company Name" placeholder="Company Name" outlined dense></v-text-field>
-                    <v-text-field v-model="user.email" label="Email" placeholder="Email" outlined dense></v-text-field>
-                    <v-text-field v-model="user.password" label="Passwprd" placeholder="Password" outlined dense></v-text-field>
+                    <v-text-field :disabled="this.$store.state.disabled" v-model="user.portals.portal" label="Company Name" placeholder="Company Name" outlined dense></v-text-field>
+                    <v-text-field :disabled="this.$store.state.disabled" v-model="user.email" label="Email" placeholder="Email" outlined dense></v-text-field>
+                    <v-text-field :disabled="this.$store.state.disabled" type="password" v-model="user.password" label="Passwprd" placeholder="Password" outlined dense></v-text-field>
                     <p class="caption">Based on your IP, you are in India.Change <br>
 
                         Your data will be in US data center. <a @click="loginToggle">Login</a></p>
@@ -31,13 +31,12 @@
                 </div>
 
                 <div v-else>
-                    <h3 class="mb-9">Start your 14 days free trial</h3>
-                    <v-text-field v-model="user.email" label="Email" placeholder="Email" outlined dense></v-text-field>
-                    <v-text-field v-model="user.password" label="Passwprd" placeholder="Password" outlined dense></v-text-field>
+                    <v-text-field :disabled="this.$store.state.disabled" v-model="user.email" label="Email" placeholder="Email" outlined dense></v-text-field>
+                    <v-text-field :disabled="this.$store.state.disabled" type="password" v-model="user.password" label="Passwprd" placeholder="Password" outlined dense></v-text-field>
                     <p class="caption">Based on your IP, you are in India.Change <br>
 
                         Your data will be in US data center. <a @click="loginToggle">Signup</a></p>
-                    <v-btn x-large color="red" block dark @click="save">Login</v-btn>
+                    <v-btn x-large color="red" block dark @click="login" :loading="this.$store.state.loading">Login</v-btn>
                 </div>
             </v-col>
         </v-row>
@@ -70,6 +69,45 @@ export default {
     methods: {
         loginToggle() {
             this.signup ? this.signup = false : this.signup = true
+        },
+        async login() {
+            this.$store.state.loading = true
+            this.$store.state.disabled = true
+            try {
+                const userCredential = {
+                    email: this.user.email,
+                    password: this.user.password
+                }
+                await http_users.Login(userCredential).then(res => {
+                    if (res) {
+                        localStorage.setItem("user_token", JSON.stringify(res.data.token));
+                        var self = this;
+                        setTimeout(function () {
+                            http_users.getUserById(res.data.result._id).then(result => {
+                                if (result) {
+                                    setTimeout(() => {
+                                        self.$router.push({name: 'Home', params: {portal: result.data.documents.portals[0].portal}})
+                                        self.$store.state.loading = false
+                                        self.$store.state.disabled = false
+                                    }, 2000);
+                                }
+                            })
+                        }, 2000);
+                    }
+                })
+            } catch (error) {
+                let grabError = error.response
+                if (error) {
+                    this.$notify({
+                        group: 'foo',
+                        type: 'error',
+                        title: 'Error',
+                        text: grabError.data.message
+                    });
+                    this.$store.state.disabled = false
+                    this.$store.state.loading = false
+                }
+            }
         },
         async save() {
             try {

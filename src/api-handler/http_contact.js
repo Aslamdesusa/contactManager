@@ -1,4 +1,8 @@
 import axios from 'axios'
+
+const token = localStorage.getItem('user_token')
+axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
+
 const deleteUrl = '/contact/api/contact-manager/v1/delete/contact'
 const postUrl = '/contact/api/contact-manager/v1/create/contact' 
 const contactEditUrl = '/contact/api/contact-manager/v1/edit/contact/by/id'

@@ -1,5 +1,8 @@
 import axios from 'axios'
 
+const token = localStorage.getItem('user_token')
+axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
+
 const companyUrl = '/company/api/contact-manager/v1/create/company'
 const companyEditUrl = '/company/api/contact-manager/v1/edit/company/by/id'
 const updateTags = '/company/api/contact-manager/v1/delete/tags'

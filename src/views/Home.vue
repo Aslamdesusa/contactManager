@@ -34,7 +34,7 @@ export default {
         teamLoad
     },
     data: () => ({
-        settings: [],
+        //
     }),
 }
 </script>

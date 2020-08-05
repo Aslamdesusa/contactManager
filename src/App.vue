@@ -18,6 +18,10 @@ export default {
     data: () => ({
         //
     }),
+    mounted(){
+        const user_token = localStorage.getItem('user_token')
+        console.log(user_token)
+    }
 };
 </script>
 
