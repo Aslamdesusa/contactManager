@@ -19,7 +19,7 @@
                 <span>export</span>
             </router-link>
 
-            <v-btn rounded text to="/contacts/bashhippo/contacts/add" class="primary ml-2 mr-2" small>Add Contact</v-btn>
+            <v-btn rounded text :to="{name: 'Contact_Form', params: {portal: portal}}" class="primary ml-2 mr-2" small>Add Contact</v-btn>
 
             <v-btn fab small outlined color="grey" width="30" height="30" class="">
                 <v-icon>mdi-menu</v-icon>
@@ -74,7 +74,8 @@ export default {
     },
     computed: {
         ...mapState([
-            'contactPost'
+            'contactPost',
+            'portal'
         ])
     }
 }

@@ -19,8 +19,7 @@ export default {
         //
     }),
     mounted(){
-        const user_token = localStorage.getItem('user_token')
-        console.log(user_token)
+        // const user_token = JSON.parse(localStorage.getItem('user_token'))
     }
 };
 </script>

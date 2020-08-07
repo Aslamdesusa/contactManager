@@ -7,7 +7,11 @@ const uniqUser = '/user/api/contact-manager/v1/user/single/user'
 class users {
     // create new User
     static insertPost(data){
-        return axios.post(`${signUpUrl}`, data)
+        return axios.post(`${signUpUrl}`, {
+            email: data.email,
+            password: data.password,
+            portalName: data.portalName
+        })
         .then(function(res){
             return res
         }).catch((err) =>{

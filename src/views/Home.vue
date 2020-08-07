@@ -6,6 +6,7 @@
                 <v-container class="pa-0">
                     <div class="top-header-sticky white pa-4">
                         <h2 class="font-weight-light">Feeds</h2>
+                        <!-- {{portals}} -->
                         <v-divider></v-divider>
                     </div>
                     <feeds />

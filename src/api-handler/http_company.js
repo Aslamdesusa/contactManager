@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const token = localStorage.getItem('user_token')
+const token = JSON.parse(localStorage.getItem('user_token'))
 axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
 
 const companyUrl = '/company/api/contact-manager/v1/create/company'
@@ -63,6 +63,7 @@ class companies {
         return axios.put(`${companyEditUrl}?_id=${_id}`, {
           //   User Details
             userId: data.userId,
+            portal: data.portal,
             companyName: data.companyName,
             website: data.website,
             description: data.description,

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-const token = localStorage.getItem('user_token')
+const token = JSON.parse(localStorage.getItem('user_token'))
 axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
 
 Vue.use(Vuex);
@@ -23,7 +23,8 @@ export const store = new Vuex.Store({
         contactId: null,
 
         // local storage items
-        userToken: null
+        userToken: null,
+        portals: null
     },
     actions: {
         // companies actions
@@ -78,6 +79,17 @@ export const store = new Vuex.Store({
             })
         },
         // end
+
+        // portal data
+        async getPortalByUserId(){
+            let userId = JSON.parse(localStorage.getItem('user_id'))
+            await axios
+            .get(`/portal/api/contact-manager/v1/get/portal/by/user-id?userId=${userId}`)
+            .then(res=>{
+                let portals = res.data.doc
+                this.commit('SET_PORTAL', portals)
+            })
+        }
     },
     mutations:{
         // companies mutations
@@ -95,6 +107,12 @@ export const store = new Vuex.Store({
         },
         SET_GET_CONTACT (state, singleDoc) {
             state.selectPostContact = singleDoc
+        },
+        // end
+
+        // portal mutations
+        SET_PORTAL (state, portals) {
+            state.portals = portals
         }
         // end
 

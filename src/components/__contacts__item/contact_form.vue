@@ -149,7 +149,7 @@ export default {
                 try {
                     await http_contacts.updatePost(this.formData, this.$route.params.id).then(res => {
                         if (res) {
-                            this.$router.push(`/contacts/bashhippo/contacts/details/${this.$route.params.id}`)
+                            this.$router.push(`/contacts/${this.$route.params.portal}/contacts/details/${this.$route.params.id}`)
                             this.$notify({
                                 group: 'foo',
                                 type: 'success',
@@ -177,7 +177,7 @@ export default {
                 try {
                     await http_contacts.insertPost(this.formData).then(res => {
                         if (res) {
-                            this.$router.push(`/contacts/bashhippo/contacts/details/${res.data.contactId}`)
+                            this.$router.push(`/contacts/${this.$route.params.portal}/contacts/details/${res.data.contactId}`)
                             this.$notify({
                                 group: 'foo',
                                 type: 'success',

@@ -29,7 +29,7 @@
 
                 <v-list-item-action>
                     <div>
-                        <v-btn to="/contacts/bashhippo/contacts/add" fab small text color="white" width="30" height="30" class="light-blue mr-2">
+                        <v-btn :to="{name: 'Contact_Form', params: {portal: portal}}" fab small text color="white" width="30" height="30" class="light-blue mr-2">
                             <v-icon>mdi-plus</v-icon>
                         </v-btn>
                         <v-btn fab small outlined color="grey" width="30" height="30" class="">
@@ -84,6 +84,7 @@ export default {
     computed: {
         ...mapState([
             'contactPost',
+            'portal'
         ])
     },
     methods: {

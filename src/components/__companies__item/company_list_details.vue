@@ -17,7 +17,7 @@
                         <v-list dense>
                             <v-list-item-group v-model="item" color="primary">
                                 <v-list-item v-for="(item, i) in items" :key="i">
-                                    <v-list-item-content>
+                                    <v-list-item-content> 
                                         <v-list-item-title v-text="item.title"></v-list-item-title>
                                     </v-list-item-content>
                                 </v-list-item>
@@ -29,7 +29,7 @@
 
                 <v-list-item-action>
                     <div>
-                        <v-btn to="/contacts/bashhippo/companies/add" fab small text color="white" width="30" height="30" class="light-blue mr-2">
+                        <v-btn :to="{name: 'Company_Form', params: {portal: portal}}" fab small text color="white" width="30" height="30" class="light-blue mr-2">
                             <v-icon>mdi-plus</v-icon>
                         </v-btn>
                         <v-btn fab small outlined color="grey" width="30" height="30" class="">
@@ -85,7 +85,8 @@ export default {
     computed: {
         ...mapState([
             'posts',
-            'selectSingPost'
+            'selectSingPost',
+            'portal'
         ])
     },
     created() {

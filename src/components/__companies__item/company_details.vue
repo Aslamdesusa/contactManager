@@ -14,7 +14,7 @@
                 <span class="ma-4 grey--text caption">{{this.$store.state.selectSingPost.description}}</span>
             </div>
             <v-spacer></v-spacer>
-            <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small :to="{name: 'EditCompanyDetails', params: {id: this.$store.state.selectSingPost._id}}">Edit</v-btn>
+            <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small :to="{name: 'EditCompanyDetails', params: {portal: portal, id: this.$store.state.selectSingPost._id}}">Edit</v-btn>
             <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small>New Record</v-btn>
 
             <v-menu offset-y>
@@ -219,6 +219,9 @@
 
 <script>
 import http_companies from '../../api-handler/http_company'
+import {
+    mapState
+} from 'vuex'
 export default {
     data() {
         return {
@@ -243,6 +246,11 @@ export default {
                 }
             ],
         }
+    },
+    computed: {
+        ...mapState([
+            'portal'
+        ])
     },
     methods: {
         closePage() {

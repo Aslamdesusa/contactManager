@@ -86,6 +86,7 @@ export default {
             select: [],
             formData: {
                 userId: 'idNotAvailable',
+                portal: '',
                 companyName: '',
                 website: '',
                 description: '',
@@ -119,7 +120,8 @@ export default {
     },
     computed: {
         ...mapState([
-            'selectSingPost'
+            'selectSingPost',
+            'portal'
         ])
     },
     created() {
@@ -141,9 +143,10 @@ export default {
             this.$store.state.loading = true
             if (this.$route.params.id) {
                 try {
+                    this.formData.portal = this.portal
                     await http_company.updatePost(this.formData, this.$route.params.id).then(res => {
                         if (res) {
-                            this.$router.push(`/contacts/bashhippo/companies/details/${this.$route.params.id}`)
+                            this.$router.push(`/contacts/${this.$route.params.portal}/companies/details/${this.$route.params.id}`)
                             this.$notify({
                                 group: 'foo',
                                 type: 'success',
@@ -169,9 +172,10 @@ export default {
                 }
             } else {
                 try {
+                    this.formData.portal = this.portal
                     await http_company.insertPost(this.formData).then(res => {
                         if (res) {
-                            this.$router.push(`/contacts/bashhippo/companies/details/${res.data.companyId}`)
+                            this.$router.push(`/contacts/${this.$route.params.portal}/companies/details/${res.data.companyId}`)
 
                             this.$notify({
                                 group: 'foo',

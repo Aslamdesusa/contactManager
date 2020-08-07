@@ -27,7 +27,7 @@ Vue.use(VueRouter)
 
   // companies routes
   {
-    path: '/contacts/:portal/companies',
+    path: '/contacts/:portal/companies', 
     name: 'Company',
     // route level code-splitting
     // this generates a separate chunk (company.[hash].js) for this route

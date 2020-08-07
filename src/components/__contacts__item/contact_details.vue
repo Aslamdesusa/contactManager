@@ -27,7 +27,7 @@
 
             <v-col cols="6" class="d-flex flex-row-reverse">
                 <div>
-                    <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small :to="{name: 'EditContactDetails', params: {id: selectPostContact._id}}">Edit</v-btn>
+                    <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small :to="{name: 'EditContactDetails', params: {portal: portal, id: selectPostContact._id}}">Edit</v-btn>
                     <v-btn rounded outlined color="grey" class="text-capitalize ml-1 mr-1" small>New Record</v-btn>
 
                     <v-menu offset-y>
@@ -223,6 +223,7 @@ export default {
     computed: {
         ...mapState([
             'selectPostContact',
+            'portal'
         ])
     },
     methods: {
