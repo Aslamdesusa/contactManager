@@ -85,7 +85,7 @@ export default {
         return {
             select: [],
             formData: {
-                userId: 'idNotAvailable',
+                userId: '',
                 portal: '',
                 companyName: '',
                 website: '',
@@ -129,6 +129,10 @@ export default {
             this.$store.state.companyId = this.$route.params.id
             this.$store.dispatch('getPostById')
         }
+        let localItemPortal = JSON.parse(localStorage.getItem('portalSelected'))
+        if (localItemPortal) {
+            this.formData.portal = localItemPortal._id
+        }
     },
     watch: {
         selectSingPost: function (val) {
@@ -143,7 +147,6 @@ export default {
             this.$store.state.loading = true
             if (this.$route.params.id) {
                 try {
-                    this.formData.portal = this.portal
                     await http_company.updatePost(this.formData, this.$route.params.id).then(res => {
                         if (res) {
                             this.$router.push(`/contacts/${this.$route.params.portal}/companies/details/${this.$route.params.id}`)
@@ -172,7 +175,6 @@ export default {
                 }
             } else {
                 try {
-                    this.formData.portal = this.portal
                     await http_company.insertPost(this.formData).then(res => {
                         if (res) {
                             this.$router.push(`/contacts/${this.$route.params.portal}/companies/details/${res.data.companyId}`)

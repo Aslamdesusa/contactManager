@@ -29,7 +29,7 @@
 
                 <v-list-item-action>
                     <div>
-                        <v-btn :to="{name: 'Contact_Form', params: {portal: portal}}" fab small text color="white" width="30" height="30" class="light-blue mr-2">
+                        <v-btn :to="{name: 'Contact_Form', params: {portal: portalName}}" fab small text color="white" width="30" height="30" class="light-blue mr-2">
                             <v-icon>mdi-plus</v-icon>
                         </v-btn>
                         <v-btn fab small outlined color="grey" width="30" height="30" class="">
@@ -82,9 +82,17 @@ export default {
         this.$store.dispatch('loadContactPosts')
     },
     computed: {
+        // a computed getter
+        portalName: function () {
+            // `this` points to the vm instance
+            let storageItem = JSON.parse(localStorage.getItem('portalSelected'))
+            if (storageItem) {
+                return storageItem.portalName
+            }
+            return null
+        },
         ...mapState([
             'contactPost',
-            'portal'
         ])
     },
     methods: {

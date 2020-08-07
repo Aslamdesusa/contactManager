@@ -19,7 +19,7 @@
                 <span>export</span>
             </router-link>
 
-            <v-btn rounded text :to="{name: 'Company_Form', params: {portal: portal}}" class="primary ml-2 mr-2" small>Add Company</v-btn>
+            <v-btn rounded text :to="{name: 'Company_Form', params: {portal: portalName}}" class="primary ml-2 mr-2" small>Add Company</v-btn>
 
             <v-btn fab small outlined color="grey" width="30" height="30" class="">
                 <v-icon>mdi-menu</v-icon>
@@ -73,9 +73,17 @@ export default {
         this.$store.dispatch('loadPosts')
     },
     computed: {
+        // a computed getter
+        portalName: function () {
+            // `this` points to the vm instance
+            let storageItem = JSON.parse(localStorage.getItem('portalSelected'))
+            if (storageItem) {
+                return storageItem.portalName
+            }
+            return null
+        },
         ...mapState([
             'posts',
-            'portal'
         ])
     }
 }
