@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-const token = JSON.parse(localStorage.getItem('user_token'))
+var token = JSON.parse(localStorage.getItem('user_token'))
 axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
+
+var user_Id = JSON.parse(localStorage.getItem('user_Id'))
+var portalSelected = JSON.parse(localStorage.getItem('portalSelected'))
 
 Vue.use(Vuex);
 
@@ -30,7 +33,7 @@ export const store = new Vuex.Store({
         // companies actions
         async loadPosts(){
             await axios
-            .get('/company/api/contact-manager/v1/get/companies')
+            .get(`/company/api/contact-manager/v1/companies/by/user/roles?role=${portalSelected.createdBy.profile}&userId=${user_Id}&portalName=${portalSelected._id}`)
             .then(res=>{
                 let posts = res.data.documents
                 this.commit('SET_POSTS', posts)
@@ -56,7 +59,7 @@ export const store = new Vuex.Store({
         // contact actions
         async loadContactPosts(){
             await axios
-            .get('/contact/api/contact-manager/v1/get/contacts')
+            .get(`/contact/api/contact-manager/v1/contacts/by/role?role=${portalSelected.createdBy.profile}&userId=${user_Id}&portalName=${portalSelected._id}`)
             .then(res=>{
                 let contactPosts = res.data.documents
                 this.commit('SET_CONTACT_POSTS', contactPosts)

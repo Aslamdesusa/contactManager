@@ -60,7 +60,9 @@
                 </v-list>
             </v-menu>
 
-            <v-icon class="ml-1 mr-1" @click="closePage">mdi-window-close</v-icon>
+            <v-btn text rounded small color="white" :to="{name: 'Company', params: {portal: portalName, id: this.$store.state.selectSingPost._id}}">
+                <v-icon class="ml-1 mr-1" color="grey">mdi-window-close</v-icon>
+            </v-btn>
         </v-toolbar>
 
         <div class="text-sm-body-2 ml-16">
@@ -254,20 +256,8 @@ export default {
             }
             return null
         },
-
-        // ...mapState([
-        //     'portal'
-        // ])
     },
     methods: {
-        closePage() {
-            this.$router.push({
-                name: 'Company',
-                params: {
-                    portal: 'bashhippo'
-                }
-            })
-        },
         async addMoreTags() {
             this.$store.state.disabled = true
             this.$store.state.loading = true

@@ -54,6 +54,7 @@ class contacts {
     static updatePost(data, _id){
         return axios.put(`${contactEditUrl}?_id=${_id}`, {
             userId: data.userId,
+            portal: data.portal,
             contactName: data.contactName,
             title: data.title,
             companyId: data.companyId,

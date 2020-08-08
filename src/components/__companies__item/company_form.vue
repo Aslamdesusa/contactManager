@@ -121,7 +121,6 @@ export default {
     computed: {
         ...mapState([
             'selectSingPost',
-            'portal'
         ])
     },
     created() {
@@ -130,8 +129,11 @@ export default {
             this.$store.dispatch('getPostById')
         }
         let localItemPortal = JSON.parse(localStorage.getItem('portalSelected'))
-        if (localItemPortal) {
+        let localItemUserId = JSON.parse(localStorage.getItem('user_Id'))
+        console.log(localItemUserId)
+        if (localItemPortal && localItemUserId) {
             this.formData.portal = localItemPortal._id
+            this.formData.userId = localItemUserId
         }
     },
     watch: {
@@ -175,6 +177,7 @@ export default {
                 }
             } else {
                 try {
+                    console.log(this.formData)
                     await http_company.insertPost(this.formData).then(res => {
                         if (res) {
                             this.$router.push(`/contacts/${this.$route.params.portal}/companies/details/${res.data.companyId}`)

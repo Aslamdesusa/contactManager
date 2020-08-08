@@ -70,7 +70,11 @@ export default {
         }
     },
     mounted() {
-        this.$store.dispatch('loadPosts')
+        let user_Id = JSON.parse(localStorage.getItem('user_Id'))
+        let portalSelected = JSON.parse(localStorage.getItem('portalSelected'))
+        if (user_Id === portalSelected.createdBy.userId) {
+            this.$store.dispatch('loadPosts')
+        }
     },
     computed: {
         // a computed getter

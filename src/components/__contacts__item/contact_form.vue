@@ -94,7 +94,8 @@ export default {
         return {
             select: [],
             formData: {
-                userId: 'idNotAvailable',
+                userId: '',
+                portal: '',
                 contactName: '',
                 title: '',
                 companyId: '',
@@ -132,6 +133,12 @@ export default {
         if (this.$route.params.id) {
             this.$store.state.contactId = this.$route.params.id
             this.$store.dispatch('getContactPostById')
+        }
+        let localItemPortal = JSON.parse(localStorage.getItem('portalSelected'))
+        let localItemUserId = JSON.parse(localStorage.getItem('user_Id'))
+        if (localItemPortal && localItemUserId) {
+            this.formData.portal = localItemPortal._id
+            this.formData.userId = localItemUserId
         }
     },
     watch: {
