@@ -85,12 +85,8 @@ export default {
                                     location.href = `#${self.$route.query.redirect}`
                                     location.reload()
                                 } else {
-                                    self.$router.push({
-                                        name: 'Home',
-                                        params: {
-                                            portal: doc.data.doc[0].portalName
-                                        }
-                                    })
+                                    location.href = `#/contacts/${doc.data.doc[0].portalName}/deshboard`
+                                    location.reload()
                                 }
                                 self.$store.state.loading = false
                                 self.$store.state.disabled = false
@@ -119,7 +115,7 @@ export default {
                 await http_users.insertPost(this.user).then(res => {
                     if (res) {
                         localStorage.setItem("user_token", JSON.stringify(res.data.token));
-                        localStorage.setItem("user_id", JSON.stringify(res.data.doc._id));
+                        localStorage.setItem("user_Id", JSON.stringify(res.data.doc._id));
                         const self = this;
                         let portalObject = {
                             portalName: this.user.portalName,
@@ -133,13 +129,10 @@ export default {
                         }
                         http_portals.insertPost(portalObject).then(result => {
                             if (result) {
+                                localStorage.setItem("portalSelected", JSON.stringify(result.data.doc))
                                 setTimeout(() => {
-                                    self.$router.push({
-                                        name: 'Home',
-                                        params: {
-                                            portal: result.data.doc.portalName
-                                        }
-                                    })
+                                    location.href = `#/contacts/${result.data.doc.portalName}/deshboard`
+                                    location.reload()
                                     self.$store.state.loading = false
                                     self.$store.state.disabled = false
                                 }, 2000);

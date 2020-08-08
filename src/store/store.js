@@ -85,7 +85,7 @@ export const store = new Vuex.Store({
 
         // portal data
         async getPortalByUserId(){
-            let userId = JSON.parse(localStorage.getItem('user_id'))
+            let userId = JSON.parse(localStorage.getItem('user_Id'))
             await axios
             .get(`/portal/api/contact-manager/v1/get/portal/by/user-id?userId=${userId}`)
             .then(res=>{

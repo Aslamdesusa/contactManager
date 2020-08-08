@@ -90,7 +90,7 @@ const routes = [
         meta:{
           requiresAuth: true,
         },
-        component: () => import( /* webpackChunkName: "about" */ '../views/company_item/company.vue'), 
+        component: () => import( /* webpackChunkName: "about" */ '../views/contacts_item/contacts.vue'), 
       },
       { 
         path: 'contacts/add',
@@ -98,7 +98,7 @@ const routes = [
         meta:{
           requiresAuth: true,
         },
-        component: () => import( /* webpackChunkName: "about" */ '../views/company_item/company_form.vue'), 
+        component: () => import( /* webpackChunkName: "about" */ '../views/contacts_item/contact_form.vue'), 
       },
       { 
         path: 'contacts/details/:id',
@@ -106,7 +106,7 @@ const routes = [
         meta:{
           requiresAuth: true,
         },
-        component: () => import( /* webpackChunkName: "about" */ '../views/company_item/company_details.vue'), 
+        component: () => import( /* webpackChunkName: "about" */ '../views/contacts_item/contact_details'), 
       },
       { 
         path: '/contacts/edit/:id',
@@ -114,7 +114,7 @@ const routes = [
         meta:{
           requiresAuth: true,
         },
-        component: () => import( /* webpackChunkName: "about" */ '../views/company_item/company_form.vue'), 
+        component: () => import( /* webpackChunkName: "about" */ '../views/contacts_item/contact_form.vue'), 
       },
     ]
   },

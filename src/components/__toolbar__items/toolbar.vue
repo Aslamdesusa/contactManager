@@ -43,10 +43,10 @@
         <v-divider v-if="token" vertical></v-divider>
 
         <span v-if="token" text class="text-capitalize">
-            <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-y>
+            <v-menu v-if="doc" v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-y>
                 <template v-slot:activator="{ on, attrs }">
                     <v-avatar class="mr-3 ml-3" color="teal" size="30" v-bind="attrs" v-on="on">
-                        <v-gravatar email="aslam17@navgurukul.org" />
+                        <v-gravatar :email="doc.email" />
                     </v-avatar>
                 </template>
 
@@ -54,15 +54,15 @@
                     <v-row style="line-height: 2;">
                         <v-col cols="3">
                             <v-avatar class="mr-3 ml-3" color="teal" size="80">
-                                <v-gravatar email="aslam17@navgurukul.org" />
+                                <v-gravatar :email="doc.email" />
                             </v-avatar>
                         </v-col>
                         <v-col cols="6" class="ml-5">
                             <span>
-                                <h5>Desusa77777</h5>
+                                <h5>{{(doc.email).split('@')[0]}}</h5>
                             </span>
                             <span>
-                                <p>desusa77777@gmail.com</p>
+                                <p class="grey--text">{{doc.email}}</p>
                             </span>
                             <span class="d-flex">
                                 <a class="mr-4" href="#">My Account</a>
@@ -93,30 +93,38 @@
 
 <script>
 import NavigationBar from '../__navigation__bar/navigationBar.vue'
+import http_user from '../../api-handler/http_users'
 export default {
     components: {
         NavigationBar
     },
     data() {
         return {
-            fav: true,
             menu: false,
-            message: false,
-            hints: true,
-            show: true,
-            token: null
+            token: null,
+            doc: null,
         }
     },
-    created(){
+    created() {
         let token = localStorage.getItem('user_token')
         if (token) {
             this.token = token
+            this.getUserById()
         }
     },
-    methods:{
-        logout(){
+    methods: {
+        logout() {
             window.localStorage.clear();
             window.location.reload();
+        },
+        async getUserById() {
+            let userId = JSON.parse(localStorage.getItem('user_Id'))
+            await http_user.getUserById(userId)
+            .then(res => {
+                if (res) {
+                    this.doc = res.data.documents
+                }
+            })
         }
     }
 }
