@@ -4,6 +4,9 @@ import router from './router'
 import vuetify from './plugins/vuetify';
 import { store } from './store/store'
 import Notifications from 'vue-notification'
+import Gravatar from 'vue-gravatar';
+
+Vue.component('v-gravatar', Gravatar);
 Vue.use(Notifications)
 
 Vue.config.productionTip = false

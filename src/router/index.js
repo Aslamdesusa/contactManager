@@ -1,119 +1,150 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import NProgress from "nprogress";
+import authenticate from './auth'
 
 Vue.use(VueRouter)
 
-  const routes = [
-  // signup and login page
+const routes = [
   {
-    path: '/contactmanager',
-    name: 'contactmanager',
-    // route level code-splitting
-    // this generates a separate chunk (Company_Details.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "Company_Details" */ '../views/index.vue')
+    path: '/', 
+    component: () => import('../views'),
+    redirect: "/contactManager",
+    children: [
+      { 
+        path: 'contactmanager',
+        component: () => import('../views/home/index.vue'), //home page
+      },
+    ]
+  },
+  
+  // Deshboard
+  {
+    path: '/contacts/:portal/',
+    beforeEnter: authenticate,
+    component: () => import('../views'),
+    children: [
+      { 
+        path: 'deshboard',
+        name: 'Home',
+        meta:{
+          requiresAuth: true,
+        },
+        component: () => import( /* webpackChunkName: "about" */ '../views/deshboard/Home.vue'), 
+      },
+    ]
   },
   // end
 
-  // deshboard routes
+  // companies
   {
-    path: '/contacts/:portal/deshboard',
-    name: 'Home',
-    component: Home
+    path: '/contacts/:portal/',
+    beforeEnter: authenticate,
+    component: () => import('../views'),
+    children: [
+      { 
+        path: 'companies',
+        name: 'Company',
+        meta:{
+          requiresAuth: true,
+        },
+        component: () => import( /* webpackChunkName: "about" */ '../views/company_item/company.vue'), 
+      },
+      { 
+        path: 'companies/add',
+        name: 'Company_Form',
+        meta:{
+          requiresAuth: true,
+        },
+        component: () => import( /* webpackChunkName: "about" */ '../views/company_item/company_form.vue'), 
+      },
+      { 
+        path: 'companies/details/:id',
+        name: 'CompanyDetails',
+        meta:{
+          requiresAuth: true,
+        },
+        component: () => import( /* webpackChunkName: "about" */ '../views/company_item/company_details.vue'), 
+      },
+      { 
+        path: 'companies/edit/:id',
+        name: 'EditCompanyDetails',
+        meta:{
+          requiresAuth: true,
+        },
+        component: () => import( /* webpackChunkName: "about" */ '../views/company_item/company_form.vue'), 
+      },
+    ]
   },
   // end
 
-  // companies routes
+  // contacts routes
   {
-    path: '/contacts/:portal/companies', 
-    name: 'Company',
-    // route level code-splitting
-    // this generates a separate chunk (company.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "company" */ '../views/company_item/company.vue')
+    path: '/contacts/:portal/',
+    beforeEnter: authenticate,
+    component: () => import('../views'),
+    children: [
+      { 
+        path: 'contacts',
+        name: 'Contacts',
+        meta:{
+          requiresAuth: true,
+        },
+        component: () => import( /* webpackChunkName: "about" */ '../views/company_item/company.vue'), 
+      },
+      { 
+        path: 'contacts/add',
+        name: 'Contact_Form',
+        meta:{
+          requiresAuth: true,
+        },
+        component: () => import( /* webpackChunkName: "about" */ '../views/company_item/company_form.vue'), 
+      },
+      { 
+        path: 'contacts/details/:id',
+        name: 'ContactDetails',
+        meta:{
+          requiresAuth: true,
+        },
+        component: () => import( /* webpackChunkName: "about" */ '../views/company_item/company_details.vue'), 
+      },
+      { 
+        path: '/contacts/edit/:id',
+        name: 'EditContactDetails',
+        meta:{
+          requiresAuth: true,
+        },
+        component: () => import( /* webpackChunkName: "about" */ '../views/company_item/company_form.vue'), 
+      },
+    ]
   },
-  {
-    path: '/contacts/:portal/companies/add',
-    name: 'Company_Form',
-    // route level code-splitting
-    // this generates a separate chunk (company_form.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "company form" */ '../views/company_item/company_form.vue')
-  },
-  {
-    path: '/contacts/:portal/companies/details/:id',
-    name: 'CompanyDetails',
-    // route level code-splitting
-    // this generates a separate chunk (Company_Details.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "Company_Details" */ '../views/company_item/company_details.vue')
-  },
-  {
-    path: '/contacts/:portal/companies/edit/:id',
-    name: 'EditCompanyDetails',
-    // route level code-splitting
-    // this generates a separate chunk (Company_Details.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "Company_Details" */ '../views/company_item/company_form.vue')
-  },
-  // end
 
-  // contact routes
-  {
-    path: '/contacts/:portal/contacts',
-    name: 'Contacts',
-    // route level code-splitting
-    // this generates a separate chunk (contacts.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "contacts" */ '../views/contacts_item/contacts.vue')
-  },
-  {
-    path: '/contacts/:portal/contacts/details/:id',
-    name: 'ContactDetails',
-    // route level code-splitting
-    // this generates a separate chunk (company_details.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "company_details" */ '../views/contacts_item/contact_details.vue')
-  },
-  {
-    path: '/contacts/:portal/contacts/add',
-    name: 'Contact_Form',
-    // route level code-splitting
-    // this generates a separate chunk (contact_form.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "contact form" */ '../views/contacts_item/contact_form.vue')
-  },
-  {
-    path: '/contacts/:portal/contacts/edit/:id',
-    name: 'EditContactDetails',
-    // route level code-splitting
-    // this generates a separate chunk (Company_Details.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "Company_Details" */ '../views/contacts_item/contact_form')
-  },
-  // end
 ]
 
 const router = new VueRouter({
   // mode: 'history',
   base: process.env.BASE_URL,
-  routes
-})
-
-router.beforeResolve((to, from, next) => {
-  // If this isn't an initial page load.
-  if (to.name) {
-      // Start the route progress bar.
-      NProgress.start()
+  routes,
+  scrollBehavior() {
+      return {x: 0, y: 0}
   }
-  next()
-})
+});
+
+router.beforeEach((to, from, next) => {
+  // If this isn't an initial page load.
+  if (to.path) {
+    // Start the route progress bar.
+
+    NProgress.start();
+    NProgress.set(0.1);
+  }
+  next();
+});
 
 router.afterEach(() => {
   // Complete the animation of the route progress bar.
   NProgress.done()
 })
+
 
 export default router

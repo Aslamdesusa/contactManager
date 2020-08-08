@@ -16,37 +16,37 @@
 
         <v-spacer></v-spacer>
 
-        <p class="text-caption mt-4">Your trial period expires in 13 days.</p>
-        <v-icon small class="mr-2">mdi-comment-question-outline</v-icon>
-        <span class="text-capitalize grey--text">
+        <p v-if="token" class="text-caption mt-4">Your trial period expires in 13 days.</p>
+        <v-icon v-if="token" small class="mr-2">mdi-comment-question-outline</v-icon>
+        <span v-if="token" class="text-capitalize grey--text">
             <v-btn rounded color="primary" class="text-capitalize mr-3" dark small outlined>upgrade now</v-btn>
         </span>
 
-        <v-divider vertical></v-divider>
+        <v-divider v-if="token" vertical></v-divider>
 
-        <span class="text-capitalize grey--text">
+        <span v-if="token" class="text-capitalize grey--text">
             <v-icon small class="mr-3 ml-3">mdi-timer</v-icon>
         </span>
 
-        <v-divider vertical></v-divider>
+        <v-divider v-if="token" vertical></v-divider>
 
-        <span text class="text-capitalize grey--text">
+        <span v-if="token" text class="text-capitalize grey--text">
             <v-icon small class="mr-3 ml-3">mdi-bell-ring-outline</v-icon>
         </span>
 
-        <v-divider vertical></v-divider>
+        <v-divider v-if="token" vertical></v-divider>
 
-        <span text class="text-capitalize grey--text mr-3">
+        <span v-if="token" text class="text-capitalize grey--text mr-3">
             <v-icon small class="mr-1 ml-3">mdi-wrench</v-icon>Setup
         </span>
 
-        <v-divider vertical></v-divider>
+        <v-divider v-if="token" vertical></v-divider>
 
-        <span text class="text-capitalize">
+        <span v-if="token" text class="text-capitalize">
             <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-y>
                 <template v-slot:activator="{ on, attrs }">
                     <v-avatar class="mr-3 ml-3" color="teal" size="30" v-bind="attrs" v-on="on">
-                        <span class="white--text headline">A</span>
+                        <v-gravatar email="aslam17@navgurukul.org" />
                     </v-avatar>
                 </template>
 
@@ -54,7 +54,7 @@
                     <v-row style="line-height: 2;">
                         <v-col cols="3">
                             <v-avatar class="mr-3 ml-3" color="teal" size="80">
-                                <span class="white--text headline">A</span>
+                                <v-gravatar email="aslam17@navgurukul.org" />
                             </v-avatar>
                         </v-col>
                         <v-col cols="6" class="ml-5">
@@ -72,7 +72,9 @@
                                 <a href="#">Skins</a>
                             </span>
                             <span>
-                                <p class="red--text">Sign Out</p>
+                                <p>
+                                    <a class="red--text" @click="logout">Sign Out</a>
+                                </p>
                             </span>
                         </v-col>
                     </v-row>
@@ -84,7 +86,7 @@
     <!-- end -->
 
     <!-- Navigation Bar -->
-    <NavigationBar v-if="show" />
+    <NavigationBar v-if="token" />
     <!-- end -->
 </v-app>
 </template>
@@ -101,7 +103,20 @@ export default {
             menu: false,
             message: false,
             hints: true,
-            show: true
+            show: true,
+            token: null
+        }
+    },
+    created(){
+        let token = localStorage.getItem('user_token')
+        if (token) {
+            this.token = token
+        }
+    },
+    methods:{
+        logout(){
+            window.localStorage.clear();
+            window.location.reload();
         }
     }
 }

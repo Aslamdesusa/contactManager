@@ -27,8 +27,8 @@
 <script>
 // @ is an alias to /src
 
-import feeds from '../components/__homies__item/feeds'
-import teamLoad from '../components/__homies__item/teamLoad'
+import feeds from '../../components/__homies__item/feeds'
+import teamLoad from '../../components/__homies__item/teamLoad'
 export default {
     components: {
         feeds,
