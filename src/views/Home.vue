@@ -44,6 +44,6 @@ export default {
 .top-header-sticky {
     position: sticky;
     top: 40px;
-    z-index: 1000;
+    z-index: 4;
 }
 </style>

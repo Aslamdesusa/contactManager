@@ -11,7 +11,7 @@
         <!-- end -->
 
         <!-- Brand Name -->
-        <span class="ml-1 text-sm-body-1 font-weight-medium" >ContactManager</span>
+        <span class="ml-1 text-sm-body-1 font-weight-medium">ContactManager</span>
         <!-- end -->
 
         <v-spacer></v-spacer>
@@ -43,16 +43,48 @@
         <v-divider vertical></v-divider>
 
         <span text class="text-capitalize">
-            <v-avatar class="mr-3 ml-3" color="teal" size="30">
-                <span class="white--text headline">A</span>
-            </v-avatar>
+            <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-avatar class="mr-3 ml-3" color="teal" size="30" v-bind="attrs" v-on="on">
+                        <span class="white--text headline">A</span>
+                    </v-avatar>
+                </template>
+
+                <v-card width="400">
+                    <v-row style="line-height: 2;">
+                        <v-col cols="3">
+                            <v-avatar class="mr-3 ml-3" color="teal" size="80">
+                                <span class="white--text headline">A</span>
+                            </v-avatar>
+                        </v-col>
+                        <v-col cols="6" class="ml-5">
+                            <span>
+                                <h5>Desusa77777</h5>
+                            </span>
+                            <span>
+                                <p>desusa77777@gmail.com</p>
+                            </span>
+                            <span class="d-flex">
+                                <a class="mr-4" href="#">My Account</a>
+                                <a href="#">Help</a>
+                            </span>
+                            <span>
+                                <a href="#">Skins</a>
+                            </span>
+                            <span>
+                                <p class="red--text">Sign Out</p>
+                            </span>
+                        </v-col>
+                    </v-row>
+                </v-card>
+            </v-menu>
         </span>
 
     </v-app-bar>
     <!-- end -->
 
     <!-- Navigation Bar -->
-    <NavigationBar v-if="show"/>
+    <NavigationBar v-if="show" />
     <!-- end -->
 </v-app>
 </template>
@@ -65,7 +97,11 @@ export default {
     },
     data() {
         return {
-           show: true
+            fav: true,
+            menu: false,
+            message: false,
+            hints: true,
+            show: true
         }
     }
 }
