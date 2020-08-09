@@ -49,8 +49,5 @@ export default {
             return null
         },
     },
-    created() {
-        this.$store.dispatch('getPortalByUserId')
-    },
 }
 </script>

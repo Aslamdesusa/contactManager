@@ -22,7 +22,7 @@ class portals {
 
     // in this req inviting users
     static inviteUser(data, _id){
-        return axios.post(`${inviteUser}?_id=${_id}`, data)
+        return axios.put(`${inviteUser}?_id=${_id}`, data)
         .then(function(res){
             return res
         }).catch((err) =>{
