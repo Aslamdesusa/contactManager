@@ -119,6 +119,23 @@ const routes = [
     ]
   },
 
+  // contacts routes
+  {
+    path: '/contacts/:portal/',
+    beforeEnter: authenticate,
+    component: () => import('../views'),
+    children: [
+      { 
+        path: 'add-user',
+        name: 'AddUser',
+        meta:{
+          requiresAuth: true,
+        },
+        component: () => import( /* webpackChunkName: "about" */ '../views/user/add_user.vue'), 
+      },
+    ]
+  },
+
 ]
 
 const router = new VueRouter({

@@ -5,11 +5,24 @@ axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
 
 const postPortal = '/portal/api/contact-manager/v1/create/portal'
 const getPortalByUserId = '/portal/api/contact-manager/v1/get/portal/by/user-id'
+const inviteUser = '/portal/api/contact-manager/v1/invite/user'
 
 class portals {
     // create new company
     static insertPost(data){
         return axios.post(`${postPortal}`, data)
+        .then(function(res){
+            return res
+        }).catch((err) =>{
+            // console.log(err.response)
+            throw(err)
+            // return err.response
+        })
+    }
+
+    // in this req inviting users
+    static inviteUser(data, _id){
+        return axios.post(`${inviteUser}?_id=${_id}`, data)
         .then(function(res){
             return res
         }).catch((err) =>{

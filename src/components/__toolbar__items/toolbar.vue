@@ -37,7 +37,9 @@
         <v-divider v-if="token" vertical></v-divider>
 
         <span v-if="token" text class="text-capitalize grey--text mr-3">
-            <v-icon small class="mr-1 ml-3">mdi-wrench</v-icon>Setup
+            <router-link :to="{name: 'AddUser', params: {portal: portalName}}" style="text-decoration: none; color: grey;">
+                <v-icon small class="mr-1 ml-3">mdi-wrench</v-icon>Setup
+            </router-link>
         </span>
 
         <v-divider v-if="token" vertical></v-divider>
@@ -105,6 +107,17 @@ export default {
             doc: null,
         }
     },
+    computed: {
+        // a computed getter
+        portalName: function () {
+            // `this` points to the vm instance
+            let storageItem = JSON.parse(localStorage.getItem('portalSelected'))
+            if (storageItem) {
+                return storageItem.portalName
+            }
+            return null
+        },
+    },
     created() {
         let token = localStorage.getItem('user_token')
         if (token) {
@@ -120,11 +133,11 @@ export default {
         async getUserById() {
             let userId = JSON.parse(localStorage.getItem('user_Id'))
             await http_user.getUserById(userId)
-            .then(res => {
-                if (res) {
-                    this.doc = res.data.documents
-                }
-            })
+                .then(res => {
+                    if (res) {
+                        this.doc = res.data.documents
+                    }
+                })
         }
     }
 }
