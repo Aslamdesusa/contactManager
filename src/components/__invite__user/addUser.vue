@@ -83,11 +83,62 @@
                         </v-avatar>
                     </v-col>
                     <v-col cols="6">
-                        <div>{{item.userId.split('@')[0]}}</div>
+                        <div>
+                            {{item.userId.split('@')[0]}}
+                            <a class="mr-3">Edit</a>
+                            <v-dialog v-model="dialog1" width="500">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <a v-bind="attrs" v-on="on">Delete</a>
+                                </template>
+
+                                <v-card>
+                                    <v-card-title class="headline grey lighten-2">
+                                        Are you sure?
+                                    </v-card-title>
+
+                                    <v-card-text class="mt-4 subtitle-1">
+                                        Do you want to delete this user?
+                                    </v-card-text>
+
+                                    <v-divider></v-divider>
+
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn color="red" text @click="removeUser(item, index)" :loading="loading">
+                                            Okay, Go ahead
+                                        </v-btn>
+                                        <v-btn color="grey" text @click="dialog1 = false" :disabled="disabled">
+                                            Cancle
+                                        </v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
+                        </div>
                         <div class="body-2 grey--text">{{item.userId}}</div>
                         <div class="body-2 grey--text">Profile : {{item.profile}}</div>
                         <div class="body-2 grey--text">Role : {{item.rols}}</div>
                         <div class="body-2 grey--text">Status : <span class="green--text">{{item.status}}</span></div>
+                    </v-col>
+                </v-row>
+                <v-divider></v-divider>
+            </div>
+
+            <div>
+                <v-row>
+                    <v-col cols="1">
+                        <v-avatar color="red" size="70">
+                            <v-gravatar :email="portals[0].createdBy.userId" />
+                        </v-avatar>
+                    </v-col>
+                    <v-col cols="6">
+                        <div>
+                            {{ portals[0].createdBy.userId }}
+                            <a href="http://" class="mr-3">Edit</a>
+                        </div>
+                        <div class="body-2 grey--text">{{portals[0].createdBy.userId}}</div>
+                        <div class="body-2 grey--text">Profile : {{portals[0].createdBy.profile}}</div>
+                        <div class="body-2 grey--text">Role : {{portals[0].createdBy.rols}}</div>
+                        <div class="body-2 grey--text">Status : <span class="green--text">{{portals[0].createdBy.status}}</span></div>
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
@@ -102,16 +153,22 @@ import {
     mapState
 } from 'vuex'
 import http_portal from '../../api-handler/http_portal'
+import http_user from '../../api-handler/http_users'
 export default {
     data() {
         return {
+            loading: false,
+            disabled: false,
             items: ['administrator', 'data_administator', 'standard'],
             roles: ['CEO', 'Manager'],
             dialog: false,
+            dialog1: false,
             invitationObject: {
                 userId: '',
                 profile: '',
-                rols: ''
+                rols: '',
+                status: 'Active',
+                invitation: 'pending'
             },
             desserts: [{
                     profile: 'Administrator',
@@ -145,15 +202,66 @@ export default {
             'portals',
         ])
     },
+    watch:{
+        portals: function (val) {
+            if (val.length) {
+                http_user.getUserById(val[0].createdBy.userId).then(res=>{
+                    if (res) {
+                        val[0].createdBy.userId = res.data.documents.email
+                    }
+                })
+            }
+        },
+    },
     created() {
         this.$store.dispatch('getPortalByUserId')
+        this.getUserDataById()
     },
     methods: {
+        async removeUser(item, index) {
+            this.loading = true
+            this.disabled = true
+            try {
+                let takePortalId = this.portals
+                let userData = {
+                    userId: item.userId,
+                    profile: item.profile,
+                    rols: item.rols,
+                    status: item.status,
+                    invitation: item.invitation
+                }
+                await http_portal.removeUser(userData, takePortalId[0]._id).then(res => {
+                    if (res) {
+                        this.$notify({
+                            group: 'foo',
+                            type: 'success',
+                            title: 'success',
+                            text: 'User has been successfully deleted'
+                        });
+                        this.loading = true
+                        this.disabled = true
+                        this.portals.splice(index, 1)
+                    }
+                })
+            } catch (error) {
+                let grabError = error.response
+                if (error) {
+                    this.$notify({
+                        group: 'foo',
+                        type: 'error',
+                        title: 'Error',
+                        text: grabError.data.message
+                    });
+                    this.loading = true
+                    this.disabled = true
+                }
+            }
+        },
         async inviteUser() {
             this.$store.state.disabled = true
             this.$store.state.loading = true
             try {
-                let portalId = localStorage.getItem('portalSelected')
+                let portalId = JSON.parse(localStorage.getItem('portalSelected'))
                 await http_portal.inviteUser(this.invitationObject, portalId._id).then(res => {
                     if (res) {
                         this.$store.dispatch('getPortalByUserId')

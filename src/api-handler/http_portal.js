@@ -6,6 +6,7 @@ axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
 const postPortal = '/portal/api/contact-manager/v1/create/portal'
 const getPortalByUserId = '/portal/api/contact-manager/v1/get/portal/by/user-id'
 const inviteUser = '/portal/api/contact-manager/v1/invite/user'
+const removeUser = '/portal/api/contact-manager/v1/remove/user'
 
 class portals {
     // create new company
@@ -34,6 +35,15 @@ class portals {
 
     static getPortalByUserId(_id){
         return axios.get(`${getPortalByUserId}?userId=${_id}`)
+        .then(function(res){
+            return res
+        }).catch((err) =>{
+            throw(err)
+        })
+    }
+
+    static removeUser(data, _id){
+        return axios.put(`${removeUser}?_id=${_id}` ,data)
         .then(function(res){
             return res
         }).catch((err) =>{
