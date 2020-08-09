@@ -61,6 +61,18 @@ export default {
             },
         }
     },
+    created(){
+        let query = this.$route.query
+        if (query.queryPortal) {
+            http_users.acceptInvitation(query.queryPortal, query.queryEmail).then(res=>{
+                if (res) {
+                    this.email = query.queryEmail
+                    this.password = 'demo1234'
+                    this.login()
+                }
+            })
+        }
+    },
     methods: {
         loginToggle() {
             this.signup ? this.signup = false : this.signup = true
@@ -80,12 +92,12 @@ export default {
                         var self = this;
                         setTimeout(function () {
                             http_portals.getPortalByUserId(res.data.result._id).then(doc => {
-                                localStorage.setItem("portalSelected", JSON.stringify(doc.data.doc[0]));
+                                localStorage.setItem("portalSelected", JSON.stringify(doc.data.doc));
                                 if (self.$route.query.redirect) {
                                     location.href = `#${self.$route.query.redirect}`
                                     location.reload()
                                 } else {
-                                    location.href = `#/contacts/${doc.data.doc[0].portalName}/deshboard`
+                                    location.href = `#/contacts/${doc.data.doc.portalName}/deshboard`
                                     location.reload()
                                 }
                                 self.$store.state.loading = false

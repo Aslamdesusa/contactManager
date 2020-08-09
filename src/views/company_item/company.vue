@@ -1,7 +1,8 @@
 <template>
 <div class="contacts">
-    <noRecord v-if="noRecord" />
-    <companyDataTable />
+
+    <companyDataTable v-if="posts.length" />
+    <noRecord v-else />
 </div>
 </template>
 
@@ -9,14 +10,23 @@
 import noRecord from '../../components/_/noRecordCompanies'
 import companyDataTable from '../../components/__companies__item/data_table'
 // @ is an alias to /src
+
+import {
+    mapState
+} from 'vuex'
 export default {
     components: {
         noRecord,
         companyDataTable
     },
+    computed: {
+        ...mapState([
+            'posts',
+        ])
+    },
     data() {
         return {
-            noRecord: false,
+            //
         }
     }
 }

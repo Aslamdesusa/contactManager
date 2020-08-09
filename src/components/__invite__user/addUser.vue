@@ -75,17 +75,23 @@
         <v-divider></v-divider>
         <div v-if="portals">
 
-            <div v-for="(item, index) in portals[0].portalUsers" :key="index">
+            <div v-for="(item, index) in portalData" :key="index">
                 <v-row>
                     <v-col cols="1">
-                        <v-avatar color="red" size="70">
+                        <v-avatar v-if="item.email" color="red" size="70">
+                            <v-gravatar :email="item.email" />
+                        </v-avatar>
+                        <v-avatar v-else>
                             <v-gravatar :email="item.userId" />
                         </v-avatar>
                     </v-col>
                     <v-col cols="6">
                         <div>
-                            {{item.userId.split('@')[0]}}
-                            <a class="mr-3">Edit</a>
+                            <span class="d-flex">
+                                <span v-if="item.email">{{item.email.split('@')[0]}}</span>
+                                <span v-else>{{item.userId.split('@')[0]}}</span>
+                                <a class="mr-3 ml-2">Edit</a>
+
                             <v-dialog v-model="dialog1" width="500">
                                 <template v-slot:activator="{ on, attrs }">
                                     <a v-bind="attrs" v-on="on">Delete</a>
@@ -113,8 +119,10 @@
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
+                            </span>
                         </div>
-                        <div class="body-2 grey--text">{{item.userId}}</div>
+                        <div v-if="item.email" class="body-2 grey--text">{{item.email}}</div>
+                        <div v-else class="body-2 grey--text">{{item.userId}}</div>
                         <div class="body-2 grey--text">Profile : {{item.profile}}</div>
                         <div class="body-2 grey--text">Role : {{item.rols}}</div>
                         <div class="body-2 grey--text">Status : <span class="green--text">{{item.status}}</span></div>
@@ -123,22 +131,27 @@
                 <v-divider></v-divider>
             </div>
 
-            <div>
+            <div v-if="data">
                 <v-row>
                     <v-col cols="1">
                         <v-avatar color="red" size="70">
-                            <v-gravatar :email="portals[0].createdBy.userId" />
+                            <v-gravatar :email="portals.createdBy.userId" />
                         </v-avatar>
                     </v-col>
                     <v-col cols="6">
-                        <div>
-                            {{ portals[0].createdBy.userId }}
+                        <div v-if="data.createdBy.email">
+                            {{ data.createdBy.email }}
                             <a href="http://" class="mr-3">Edit</a>
                         </div>
-                        <div class="body-2 grey--text">{{portals[0].createdBy.userId}}</div>
-                        <div class="body-2 grey--text">Profile : {{portals[0].createdBy.profile}}</div>
-                        <div class="body-2 grey--text">Role : {{portals[0].createdBy.rols}}</div>
-                        <div class="body-2 grey--text">Status : <span class="green--text">{{portals[0].createdBy.status}}</span></div>
+                        <div v-else>
+                            {{ data.createdBy.userId }}
+                            <a href="http://" class="mr-3">Edit</a>
+                        </div>
+                        <div v-if="data.createdBy.email" class="body-2 grey--text">{{data.createdBy.email}}</div>
+                        <div v-else class="body-2 grey--text">{{data.createdBy.userId}}</div>
+                        <div class="body-2 grey--text">Profile : {{data.createdBy.profile}}</div>
+                        <div class="body-2 grey--text">Role : {{data.createdBy.rols}}</div>
+                        <div class="body-2 grey--text">Status : <span class="green--text">{{data.createdBy.status}}</span></div>
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
@@ -157,6 +170,8 @@ import http_user from '../../api-handler/http_users'
 export default {
     data() {
         return {
+            data: null,
+            portalData: null,
             loading: false,
             disabled: false,
             items: ['administrator', 'data_administator', 'standard'],
@@ -168,7 +183,6 @@ export default {
                 profile: '',
                 rols: '',
                 status: 'Active',
-                invitation: 'pending'
             },
             desserts: [{
                     profile: 'Administrator',
@@ -202,22 +216,35 @@ export default {
             'portals',
         ])
     },
-    watch:{
-        portals: function (val) {
-            if (val.length) {
-                http_user.getUserById(val[0].createdBy.userId).then(res=>{
-                    if (res) {
-                        val[0].createdBy.userId = res.data.documents.email
-                    }
-                })
+    watch: {
+        deep: true,
+        portals(val) {
+            if (val) {
+                this.getEmail()
+                this.getItems()
             }
-        },
+        }
     },
     created() {
         this.$store.dispatch('getPortalByUserId')
-        this.getUserDataById()
     },
     methods: {
+        getItems() {
+            this.portals.portalUsers.map((val, index) => {
+                http_user.getUserById(val.userId).then(res => {
+                    this.portalData = this.portals.portalUsers
+                    this.portalData[index]["email"] = res.data.documents.email
+                })
+            })
+        },
+        async getEmail() {
+            await http_user.getUserById(this.portals.createdBy.userId).then(res => {
+                if (res) {
+                    this.data = this.portals
+                    this.data.createdBy["email"] = res.data.documents.email
+                }
+            })
+        },
         async removeUser(item, index) {
             this.loading = true
             this.disabled = true
@@ -232,15 +259,16 @@ export default {
                 }
                 await http_portal.removeUser(userData, takePortalId[0]._id).then(res => {
                     if (res) {
+                        this.loading = false
+                        this.disabled = false
+                        this.dialog1 = false
+                        this.portals.portalUsers.splice(index, 1)
                         this.$notify({
                             group: 'foo',
                             type: 'success',
                             title: 'success',
                             text: 'User has been successfully deleted'
                         });
-                        this.loading = true
-                        this.disabled = true
-                        this.portals.splice(index, 1)
                     }
                 })
             } catch (error) {
@@ -265,9 +293,9 @@ export default {
                 await http_portal.inviteUser(this.invitationObject, portalId._id).then(res => {
                     if (res) {
                         this.$store.dispatch('getPortalByUserId')
-                        localStorage.setItem('portalSelected', JSON.stringify(this.portals[0]))
-                        this.$store.state.disabled = true
-                        this.$store.state.loading = true
+                        localStorage.setItem('portalSelected', JSON.stringify(this.portals))
+                        this.$store.state.disabled = false
+                        this.$store.state.loading = false
                         this.dialog = false
                         this.$notify({
                             group: 'foo',

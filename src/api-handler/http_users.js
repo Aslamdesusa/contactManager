@@ -4,6 +4,8 @@ const signUpUrl = '/user/api/contact-manager/v1/create/user'
 const signInUrL = '/user/api/contact-manager/v1/login/user'
 const uniqUser = '/user/api/contact-manager/v1/user/single/user'
 
+const acceptInv = '/user/api/contact-manager/v1/user/accept/invitation'
+
 class users {
     // create new User
     static insertPost(data){
@@ -36,6 +38,16 @@ class users {
     // getting user by uniq id
     static getUserById(_id){
         return axios.get(`${uniqUser}?_id=${_id}`)
+        .then(function(res){
+            return res
+        }).catch((err) =>{
+            throw(err)
+        })
+    }
+
+    // getting user by uniq id
+    static acceptInvitation(portal_id, email){
+        return axios.get(`${acceptInv}?portal_id=${portal_id}&email=${email}`)
         .then(function(res){
             return res
         }).catch((err) =>{
