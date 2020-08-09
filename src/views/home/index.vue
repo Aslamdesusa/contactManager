@@ -66,9 +66,12 @@ export default {
         if (query.queryPortal) {
             http_users.acceptInvitation(query.queryPortal, query.queryEmail).then(res=>{
                 if (res) {
-                    this.email = query.queryEmail
-                    this.password = 'demo1234'
-                    this.login()
+                    this.$notify({
+                        group: 'foo',
+                        type: 'success',
+                        title: 'success',
+                        text: 'Your account was verified successfully. we have sent an email with your password please have a look'
+                    });
                 }
             })
         }
