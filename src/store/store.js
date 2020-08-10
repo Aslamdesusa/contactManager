@@ -5,7 +5,7 @@ var token = JSON.parse(localStorage.getItem('user_token'))
 axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
 
 var user_Id = JSON.parse(localStorage.getItem('user_Id'))
-var portalSelected = JSON.parse(localStorage.getItem('portalSelected'))
+var portalSelected = JSON.parse(localStorage.getItem('portalSelected')) 
 const baseUrl = 'https://contact-manager-node.herokuapp.com'
 
 
