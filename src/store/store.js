@@ -6,6 +6,8 @@ axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
 
 var user_Id = JSON.parse(localStorage.getItem('user_Id'))
 var portalSelected = JSON.parse(localStorage.getItem('portalSelected'))
+const baseUrl = 'https://contact-manager-node.herokuapp.com'
+
 
 Vue.use(Vuex);
 
@@ -33,7 +35,7 @@ export const store = new Vuex.Store({
         // companies actions
         async loadPosts(){
             await axios
-            .get(`/company/api/contact-manager/v1/companies/by/user/roles?role=${portalSelected.createdBy.profile}&userId=${user_Id}&portalName=${portalSelected._id}`)
+            .get(`${baseUrl}/company/api/contact-manager/v1/companies/by/user/roles?role=${portalSelected.createdBy.profile}&userId=${user_Id}&portalName=${portalSelected._id}`)
             .then(res=>{
                 let posts = res.data.documents
                 this.commit('SET_POSTS', posts)
@@ -44,7 +46,7 @@ export const store = new Vuex.Store({
         },
         async getPostById(){
             await axios
-            .get(`/company/api/contact-manager/v1/get/company/by/id?_id=${this.state.companyId}`)
+            .get(`${baseUrl}/company/api/contact-manager/v1/get/company/by/id?_id=${this.state.companyId}`)
             .then(res=>{
                 let singleDoc = res.data.documents
                 this.commit('SET_GET', singleDoc)
@@ -59,7 +61,7 @@ export const store = new Vuex.Store({
         // contact actions
         async loadContactPosts(){
             await axios
-            .get(`/contact/api/contact-manager/v1/contacts/by/role?role=${portalSelected.createdBy.profile}&userId=${user_Id}&portalName=${portalSelected._id}`)
+            .get(`${baseUrl}/contact/api/contact-manager/v1/contacts/by/role?role=${portalSelected.createdBy.profile}&userId=${user_Id}&portalName=${portalSelected._id}`)
             .then(res=>{
                 let contactPosts = res.data.documents
                 this.commit('SET_CONTACT_POSTS', contactPosts)
@@ -71,7 +73,7 @@ export const store = new Vuex.Store({
 
         async getContactPostById(){
             await axios
-            .get(`/contact/api/contact-manager/v1/get/contact/by/id?_id=${this.state.contactId}`)
+            .get(`${baseUrl}/contact/api/contact-manager/v1/get/contact/by/id?_id=${this.state.contactId}`)
             .then(res=>{
                 let singleDoc = res.data.documents
                 this.commit('SET_GET_CONTACT', singleDoc)
@@ -86,12 +88,14 @@ export const store = new Vuex.Store({
         // portal data
         async getPortalByUserId(){
             let userId = JSON.parse(localStorage.getItem('user_Id'))
-            await axios
-            .get(`/portal/api/contact-manager/v1/get/portal/by/user-id?userId=${userId}`)
-            .then(res=>{
-                let portals = res.data.doc
-                this.commit('SET_PORTAL', portals)
-            })
+            if (userId) {
+                await axios
+                .get(`${baseUrl}/portal/api/contact-manager/v1/get/portal/by/user-id?userId=${userId}`)
+                .then(res=>{
+                    let portals = res.data.doc
+                    this.commit('SET_PORTAL', portals)
+                })
+            }
         }
     },
     mutations:{

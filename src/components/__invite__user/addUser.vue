@@ -231,10 +231,14 @@ export default {
     methods: {
         getItems() {
             this.portals.portalUsers.map((val, index) => {
-                http_user.getUserById(val.userId).then(res => {
+                if (val.invitation !== 'pending') {
+                    http_user.getUserById(val.userId).then(res => {
+                        this.portalData = this.portals.portalUsers
+                        this.portalData[index]["email"] = res.data.documents.email
+                    })   
+                }else{
                     this.portalData = this.portals.portalUsers
-                    this.portalData[index]["email"] = res.data.documents.email
-                })
+                }
             })
         },
         async getEmail() {
@@ -292,7 +296,6 @@ export default {
                 let portalId = JSON.parse(localStorage.getItem('portalSelected'))
                 await http_portal.inviteUser(this.invitationObject, portalId._id).then(res => {
                     if (res) {
-                        this.$store.dispatch('getPortalByUserId')
                         localStorage.setItem('portalSelected', JSON.stringify(this.portals))
                         this.$store.state.disabled = false
                         this.$store.state.loading = false
