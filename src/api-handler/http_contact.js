@@ -3,6 +3,9 @@ import axios from 'axios'
 const token = JSON.parse(localStorage.getItem('user_token'))
 axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
 
+// base url
+const baseUrl = 'https://contact-manager-node.herokuapp.com'
+
 const deleteUrl = '/contact/api/contact-manager/v1/delete/contact'
 const postUrl = '/contact/api/contact-manager/v1/create/contact' 
 const contactEditUrl = '/contact/api/contact-manager/v1/edit/contact/by/id'
@@ -12,7 +15,7 @@ const updateTags = '/contact/api/contact-manager/v1/delete/tags'
 class contacts {
     // create new company
     static insertPost(data){
-        return axios.post(`${postUrl}`, data)
+        return axios.post(`${baseUrl}${postUrl}`, data)
         .then(function(res){
             return res
         }).catch((err) =>{
@@ -23,7 +26,7 @@ class contacts {
     }
 
     static addMoreTags(data, _id){
-        return axios.put(`${addMoreTags}?_id=${_id}`, {
+        return axios.put(`${baseUrl}${addMoreTags}?_id=${_id}`, {
           //   User Details
             tags: data.tags,
         })
@@ -37,7 +40,7 @@ class contacts {
     }
 
     static updateTags(data, _id){
-        return axios.put(`${updateTags}?_id=${_id}`, {
+        return axios.put(`${baseUrl}${updateTags}?_id=${_id}`, {
           //   User Details
             tags: data.tags,
         })
@@ -52,7 +55,7 @@ class contacts {
 
     // update post
     static updatePost(data, _id){
-        return axios.put(`${contactEditUrl}?_id=${_id}`, {
+        return axios.put(`${baseUrl}${contactEditUrl}?_id=${_id}`, {
             userId: data.userId,
             portal: data.portal,
             contactName: data.contactName,
@@ -88,7 +91,7 @@ class contacts {
 
     // delete contacts
     static deleteContacts(_id){
-        return axios.delete(`${deleteUrl}?_id=${_id}`)
+        return axios.delete(`${baseUrl}${deleteUrl}?_id=${_id}`)
         .then(function(res){
             return res
         }).catch((err) =>{

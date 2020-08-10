@@ -3,6 +3,9 @@ import axios from 'axios'
 const token = JSON.parse(localStorage.getItem('user_token'))
 axios.defaults.headers.common = {'Authorization': `bearer ${token}`}
 
+// base url
+const baseUrl = 'https://contact-manager-node.herokuapp.com'
+
 const companyUrl = '/company/api/contact-manager/v1/create/company'
 const companyEditUrl = '/company/api/contact-manager/v1/edit/company/by/id'
 const updateTags = '/company/api/contact-manager/v1/delete/tags'
@@ -11,7 +14,7 @@ const addMoreTags = '/company/api/contact-manager/v1/add/tags'
 
 class companies {
     static deleteCompanyData(_id){
-        return axios.delete(`${deleteUrl}?_id=${_id}`)
+        return axios.delete(`${baseUrl}${deleteUrl}?_id=${_id}`)
         .then(function(res){
             return res
         }).catch((err) =>{
@@ -20,7 +23,7 @@ class companies {
     }
 
     static addMoreTags(data, _id){
-        return axios.put(`${addMoreTags}?_id=${_id}`, {
+        return axios.put(`${baseUrl}${addMoreTags}?_id=${_id}`, {
           //   User Details
             tags: data.tags,
         })
@@ -34,7 +37,7 @@ class companies {
     }
 
     static updateTags(data, _id){
-        return axios.put(`${updateTags}?_id=${_id}`, {
+        return axios.put(`${baseUrl}${updateTags}?_id=${_id}`, {
           //   User Details
             tags: data.tags,
         })
@@ -48,7 +51,7 @@ class companies {
     }
     // create new company
     static insertPost(data){
-        return axios.post(`${companyUrl}`, data)
+        return axios.post(`${baseUrl}${companyUrl}`, data)
         .then(function(res){
             return res
         }).catch((err) =>{
@@ -60,7 +63,7 @@ class companies {
 
     // update post
     static updatePost(data, _id){
-        return axios.put(`${companyEditUrl}?_id=${_id}`, {
+        return axios.put(`${baseUrl}${companyEditUrl}?_id=${_id}`, {
           //   User Details
             userId: data.userId,
             portal: data.portal,
