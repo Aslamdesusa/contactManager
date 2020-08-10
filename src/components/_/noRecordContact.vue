@@ -5,7 +5,7 @@
             <img width="380" src="https://cm.zoho.com/images/blankpage-contacts.png" alt="Brand Icon">
             <h1 class="font-weight-light">The right connections can take you a long way!</h1>
             <div class="text-center mt-6">
-                <v-btn rounded color="primary" dark>Add Contacts</v-btn>
+                <v-btn :to="{name: 'Contact_Form', params: {portal: portalName}}" rounded color="primary" dark>Add Contacts</v-btn>
             </div>
             <div class="mt-4">
                 <router-link to="/" style="text-decoration: none !important;">
@@ -26,6 +26,17 @@
 export default {
     props: {
         source: String,
+    },
+    computed: {
+        // a computed getter
+        portalName: function () {
+            // `this` points to the vm instance
+            let storageItem = JSON.parse(localStorage.getItem('portalSelected'))
+            if (storageItem) {
+                return storageItem.portalName
+            }
+            return null
+        },
     },
 }
 </script>

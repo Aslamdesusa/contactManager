@@ -5,7 +5,7 @@
             <img width="380" src="https://cm.zoho.com/images/blankpage-companies.png" alt="Brand Icon">
             <h1 class="font-weight-light">More companies imply more business opportunities!</h1>
             <div class="text-center mt-6">
-                <v-btn to="/contacts/basehippo/companies/add" rounded color="primary">Add Companies</v-btn>
+                <v-btn :to="{name: 'Company_Form', params: {portal: portalName}}" rounded color="primary">Add Companies</v-btn>
             </div>
             <div class="mt-4">
                 <router-link to="/" style="text-decoration: none !important;">
@@ -26,6 +26,17 @@
 export default {
     props: {
         source: String,
+    },
+    computed: {
+        // a computed getter
+        portalName: function () {
+            // `this` points to the vm instance
+            let storageItem = JSON.parse(localStorage.getItem('portalSelected'))
+            if (storageItem) {
+                return storageItem.portalName
+            }
+            return null
+        },
     },
 }
 </script>
