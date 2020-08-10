@@ -13,8 +13,8 @@
                     </v-list-item-action>
 
                     <v-list-item-content>
-                        <v-list-item-title>Sound</v-list-item-title>
-                        <v-list-item-subtitle>Hangouts message</v-list-item-subtitle>
+                        <v-list-item-title>Records</v-list-item-title>
+                        <v-list-item-subtitle>layout</v-list-item-subtitle>
                     </v-list-item-content>
                 </template>
             </v-list-item>
